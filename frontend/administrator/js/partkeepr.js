@@ -59,8 +59,8 @@ Ext.application({
         this.menuBar.enable();
         this.doSystemStatusCheck();
         this.doUnacknowledgedNoticesCheck();
-        this.displayTipWindowTask = new Ext.util.DelayedTask(this.displayTipOfTheDayWindow, this);
-        this.displayTipWindowTask.delay(100);
+        //this.displayTipWindowTask = new Ext.util.DelayedTask(this.displayTipOfTheDayWindow, this);
+        //this.displayTipWindowTask.delay(100);
         this.setSession(this.getSessionManager().getSession());
         this.getStatusbar().getConnectionButton().setConnected()
     },

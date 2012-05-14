@@ -57,12 +57,12 @@ Ext.define('PartKeepr.LoginDialog', {
 			       items: [
 			       	{
 			       		text: i18n("Connect"),
-			       		icon: 'resources/silkicons/connect.png',
+			       		icon: 'frontend/administrator/resources/silkicons/connect.png',
 			       		handler: Ext.bind(this.login, this)
 			       	},{
 			       		text: i18n("Close"),
 			       		handler: Ext.bind(this.close, this),
-			       		icon: 'resources/silkicons/cancel.png'
+			       		icon: 'frontend/administrator/resources/silkicons/cancel.png'
 			       	}]
 			}]
 		});

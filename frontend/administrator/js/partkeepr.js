@@ -18,6 +18,7 @@ Ext.Loader.setPath({
     PartKeepr: "js"
 });
 PartKeepr.application = null;
+PartKeepr.basePath = null;
 Ext.application({
     name: "PartKeepr",
     launch: function () {
@@ -426,8 +427,13 @@ PartKeepr.getApplication = function () {
     return PartKeepr.application
 };
 
+PartKeepr.setBasePath = function () {
+	PartKeepr.basePath = a;
+}
+
 PartKeepr.getBasePath = function () {
-    return "rest.php"
+    return PartKeepr.basePath;
+    //return window.parameters.basePath;
 };
 
 PartKeepr.getImagePath = function () {
@@ -5029,10 +5035,10 @@ Ext.define("PartKeepr.DistributorComboBox", {
 });
 Ext.define("PartKeepr.ConnectionButton", {
     extend: "Ext.Button",
-    connectedIcon: "resources/silkicons/connect.png",
-    disconnectedIcon: "resources/silkicons/disconnect.png",
+    connectedIcon: "frontend/administrator/resources/silkicons/connect.png",
+    disconnectedIcon: "frontend/administrator/resources/silkicons/disconnect.png",
     cls: "x-btn-icon",
-    icon: "resources/silkicons/disconnect.png",
+    icon: "frontend/administrator/resources/silkicons/disconnect.png",
     setConnected: function () {
         this.setIcon(this.connectedIcon)
     },
@@ -5546,12 +5552,12 @@ Ext.define("PartKeepr.LoginDialog", {
                 },
                 items: [{
                     text: i18n("Connect"),
-                    icon: "resources/silkicons/connect.png",
+                    icon: "frontend/administrator/resources/silkicons/connect.png",
                     handler: Ext.bind(this.login, this)
                 }, {
                     text: i18n("Close"),
                     handler: Ext.bind(this.close, this),
-                    icon: "resources/silkicons/cancel.png"
+                    icon: "frontend/administrator/resources/silkicons/cancel.png"
                 }]
             }]
         });
@@ -8511,7 +8517,7 @@ Ext.define("PartKeepr.Statusbar", {
         this.currentUserDisplay = Ext.create("Ext.toolbar.TextItem");
         this.currentUserDisplay.setText(i18n("Not logged in"));
         this.showMessageLog = Ext.create("Ext.Button", {
-            icon: "resources/silkicons/application_osx_terminal.png",
+            icon: "frontend/administrator/resources/silkicons/application_osx_terminal.png",
             cls: "x-btn-icon",
             handler: function () {
                 PartKeepr.getApplication().toggleMessageLog()

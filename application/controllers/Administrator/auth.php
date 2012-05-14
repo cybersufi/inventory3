@@ -8,7 +8,7 @@ class Auth extends CI_Controller {
 		parent::__construct();
 		$this->CI =& get_Instance();
 		$this->sitename = $this->CI->config->item('site_name');
-		$this->load->library('auth');
+		$this->load->library('libauth');
 	}
 	
 	public function index()

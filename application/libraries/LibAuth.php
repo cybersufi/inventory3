@@ -9,7 +9,7 @@
 	 * @version 1.4
 	 * @since 1.0
 	**/
-	class auth extends auth_db {
+	class libauth extends auth_db {
 		/**
 		 * __construct
 		 *
@@ -21,7 +21,7 @@
 		{
 			$this->ci =& get_Instance();
 	
-			$this->ci->config->load('auth');
+			$this->ci->config->load('lib_auth');
 			$auth = $this->ci->config->item('auth');
 			
 			foreach($auth as $key => $value) {

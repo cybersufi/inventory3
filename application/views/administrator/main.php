@@ -25,7 +25,7 @@
 <div id="loading"><span class="logo"></span></div>
 <script type="text/javascript">
 	window.parameters = {
-		"basePath":"<?php echo base_url('administrator').'/'; ?>",
+		"basePath":"<?php echo base_url('administrator'); ?>",
 		"doctrine_orm_version":"2.2.2",
 		"doctrine_dbal_version":"2.2.2",
 		"doctrine_common_version":"2.2.2",

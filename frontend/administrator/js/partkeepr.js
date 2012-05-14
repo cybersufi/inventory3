@@ -26,6 +26,7 @@ Ext.application({
         Ext.setLocale("en_US");
         this.createLayout();
         PartKeepr.application = this;
+        PartKeepr.setBasePath(window.parameters.basePath);
         PartKeepr.setMaxUploadSize(window.parameters.maxUploadSize);
         PartKeepr.setAvailableImageFormats(window.parameters.availableImageFormats);
         this.sessionManager = new PartKeepr.SessionManager();
@@ -427,7 +428,7 @@ PartKeepr.getApplication = function () {
     return PartKeepr.application
 };
 
-PartKeepr.setBasePath = function () {
+PartKeepr.setBasePath = function (a) {
 	PartKeepr.basePath = a;
 }
 

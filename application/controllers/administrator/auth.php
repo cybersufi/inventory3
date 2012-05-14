@@ -16,7 +16,7 @@ class Auth extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 	
-	public function doLogin() {
+	public function login() {
 		$sess_id = $this->session->userdata('id');
 		$data['base_url'] = base_url();
 		if (empty($sess_id)) {
@@ -65,16 +65,17 @@ class Auth extends CI_Controller {
 						$data['success'] = 'false';
 						$data['msg'] = 'Access Denied.';
 				}
-				$this->session->set_flashdata($data);
-				redirect(base_url('administrator/login'), 'location	');
+				//$this->session->set_flashdata($data);
+				//redirect(base_url('administrator/login'), 'location	');
 			} else {
-				$data['success'] = 'false';
-				$data['msg'] = 'Invalid data, Please try again';
-				$this->session->set_flashdata($data);
-				redirect(base_url('administrator/login'), 'refresh');
+				//$data['success'] = 'false';
+				//$data['msg'] = 'Invalid data, Please try again';
+				//$this->session->set_flashdata($data);
+				//redirect(base_url('administrator/login'), 'refresh');
 			}
 		} else {
-			redirect(base_url('administrator/main'), 'refresh');
+			
+			//redirect(base_url('administrator/main'), 'refresh');
 		}
 	}
 	

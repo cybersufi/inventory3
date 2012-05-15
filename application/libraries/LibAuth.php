@@ -158,11 +158,13 @@
 			{
 				if ($res->activation_code == 0) {					
 					$this->ci->session->set_flashdata('login', 'Your Account is Not Activated.');
-					return 'NOT_ACTIVATED';
+					//return 'NOT_ACTIVATED';
+					throw new UserInactiveException();
 				}
 				else if(!empty($res->banned_id)) {
 					$this->ci->session->set_flashdata('login', 'Your Account has been banned for the following reason : '.$res->reason);
-					return 'BANNED';
+					//return 'BANNED';
+					throw new UserBannedException($res->reason);
 				}
 				else
 				{
@@ -185,7 +187,7 @@
 					}
 				}
 			}
-			return 'false';
+			throw new InvalidLoginDataException();
 		}
 		
 		/**

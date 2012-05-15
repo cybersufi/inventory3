@@ -13,7 +13,11 @@
 	$response = array();
 	$response["status"] = $status;
 	$response["success"] = $success;
-	$response["response"] = $result;
+	if ($status != 'ok') {
+		$response["exception"] = $result;
+	} else {
+		$response["response"] = $result;
+	}
 	$response["timing"] = microtime(true) - $timingStart;
 	
 	echo json_encode($response);

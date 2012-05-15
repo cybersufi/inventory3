@@ -52,50 +52,17 @@ class Auth extends CI_Controller {
 					$data['result'] = $e->serialize();
 					
 				}
-				
-				/*switch($res){
-					case 'NOT_ACTIVATED': 
-						$data['success'] = 'false';
-						$data['msg'] = 'Access Denied. Your account is not activated. Please contact the administrator';
-						break;
-					
-					case 'BANNED': 
-						$data['success'] = 'false';
-						$data['msg'] = 'Access Denied. '.$this->session->flashdata('login');
-						break;
-					
-					case 'false': 
-						$data['success'] = 'false';
-						$data['msg'] = 'Access Denied. Wrong Username or Password';
-						break;
-					
-					case 'true': 
-						$data['success'] = 'true';
-						$data['msg'] = 'Access Granted. Welcome "'.strtoupper($this->input->post('username')).'".';
-						break;
-					
-					default: 
-						$data['success'] = 'false';
-						$data['msg'] = 'Access Denied.';
-				}
-				//$this->session->set_flashdata($data);
-				//redirect(base_url('administrator/login'), 'location	');*/
 			} else {
 				$e = new InvalidLoginDataException();
 				$data['status'] = 'error';
 				$data['success'] = false;
 				$data['result'] = $e->serialize();
-				//$data['success'] = 'false';
-				//$data['msg'] = 'Invalid data, Please try again';
-				//$this->session->set_flashdata($data);
-				//redirect(base_url('administrator/login'), 'refresh');
 			}
 		} else {
 			$e = new UserAlreadySignedInException();
 			$data['status'] = 'error';
 			$data['success'] = false;
 			$data['result'] = $e->serialize();
-			//redirect(base_url('administrator/main'), 'refresh');
 		}
 
 		$this->load->view('administrator/result', $data);

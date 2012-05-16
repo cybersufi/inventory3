@@ -20,6 +20,9 @@ class Auth extends CI_Controller {
 		$sess_id = $this->session->userdata('id');
 		$data = array();
 		$data['base_url'] = base_url();
+		$test = json_decode($this->input->post());
+		print_r($test);
+		$pass = $this->decrypt($this->input->post('password'));
 		if (empty($sess_id)) {
 			$config = array(
 				array(
@@ -39,7 +42,7 @@ class Auth extends CI_Controller {
 				try {
 					$res = $this->redux_auth->login (
 						$this->input->post('username'),
-						$this->input->post('password')
+						$this->decrypt($this->input->post('password'))
 					);	
 					
 					$data['status'] = 'ok';
@@ -47,6 +50,7 @@ class Auth extends CI_Controller {
 					$data['result'] = $res;
 					
 				} catch (SerializableException $e) {
+					$e->setDetail($this->decrypt($this->input->post('password')));
 					$data['status'] = 'error';
 					$data['success'] = false;
 					$data['result'] = $e->serialize();
@@ -54,6 +58,7 @@ class Auth extends CI_Controller {
 				}
 			} else {
 				$e = new InvalidLoginDataException();
+				$e->setDetail($pass);
 				$data['status'] = 'error';
 				$data['success'] = false;
 				$data['result'] = $e->serialize();
@@ -70,6 +75,14 @@ class Auth extends CI_Controller {
 	
 	public function doLogout() {
 		
+	}
+	
+	private function decrypt($str) {
+		$str = str_replace(".", "=", $str);
+		for($i=0; $i<5;$i++) {
+			$str=base64_decode(strrev($str));
+	  	}
+	  	return $str;
 	}
 }
 

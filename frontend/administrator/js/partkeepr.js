@@ -5237,7 +5237,8 @@ Ext.define("PartKeepr.SessionManager", {
     onLogin: function (c, b) {
         var a = new PartKeepr.ServiceCall("Auth", "login");
         a.setParameter("username", c);
-        a.setParameter("password", md5(b));
+        a.setParameter("password", this.encrypt(b));
+        //a.setParameter("password", md5(b));
         a.enableAnonymous();
         a.setHandler(Ext.bind(this.onAfterLogin, this));
         a.doCall()
@@ -5254,6 +5255,14 @@ Ext.define("PartKeepr.SessionManager", {
     },
     getSession: function () {
         return this.session
+    },
+    encrypt: function (a) {
+    	var str = a;
+    	for(i=0; i<5;i++) {
+			str=strrev(base64_encode(str));
+		}
+		str = str_replace('=','.',str);
+    	return str;
     }
 });
 Ext.define("PartKeepr.CurrentStatisticsPanel", {

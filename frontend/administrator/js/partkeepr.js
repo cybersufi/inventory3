@@ -19,6 +19,8 @@ Ext.Loader.setPath({
 });
 PartKeepr.application = null;
 PartKeepr.basePath = null;
+PartKeepr.resourcePath = null;
+PartKeepr.resourcePath = window.parameters.baseResource;
 Ext.application({
     name: "PartKeepr",
     launch: function () {
@@ -27,6 +29,7 @@ Ext.application({
         this.createLayout();
         PartKeepr.application = this;
         PartKeepr.setBasePath(window.parameters.basePath);
+        PartKeepr.setResourcePath(window.parameters.baseResource);
         PartKeepr.setMaxUploadSize(window.parameters.maxUploadSize);
         PartKeepr.setAvailableImageFormats(window.parameters.availableImageFormats);
         this.sessionManager = new PartKeepr.SessionManager();
@@ -434,6 +437,15 @@ PartKeepr.setBasePath = function (a) {
 
 PartKeepr.getBasePath = function () {
     return PartKeepr.basePath;
+    //return window.parameters.basePath;
+};
+
+PartKeepr.setResourcePath = function (a) {
+	PartKeepr.resourcePath = a;
+}
+
+PartKeepr.getResourcePath = function () {
+    return PartKeepr.resourcePath;
     //return window.parameters.basePath;
 };
 
@@ -2222,12 +2234,12 @@ Ext.define("PartKeepr.TipOfTheDayWindow", {
         this.previousButton = Ext.create("Ext.button.Button", {
             text: i18n("Previous Tip"),
             handler: Ext.bind(this.displayPreviousTip, this),
-            icon: "resources/icons/tip_previous.png",
+            icon: PartKeepr.getResourcePath() + "resources/icons/tip_previous.png",
             disabled: true
         });
         this.nextButton = Ext.create("Ext.button.Button", {
             text: i18n("Next Tip"),
-            icon: "resources/icons/tip_next.png",
+            icon: PartKeepr.getResourcePath() + "resources/icons/tip_next.png",
             handler: Ext.bind(this.displayNextTip, this)
         });
         this.showTipsCheckbox = Ext.create("Ext.form.field.Checkbox", {
@@ -2740,7 +2752,7 @@ Ext.define("PartKeepr.ProjectPartGrid", {
             disabled: true,
             itemId: "delete",
             scope: this,
-            icon: "resources/silkicons/brick_delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_delete.png",
             handler: this.onDeleteClick
         });
         this.viewButton = Ext.create("Ext.button.Button", {
@@ -2748,7 +2760,7 @@ Ext.define("PartKeepr.ProjectPartGrid", {
             disabled: true,
             itemId: "view",
             scope: this,
-            icon: "resources/silkicons/brick_go.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_go.png",
             handler: this.onViewClick
         });
         this.dockedItems = [{
@@ -2756,12 +2768,12 @@ Ext.define("PartKeepr.ProjectPartGrid", {
             items: [{
                 text: i18n("Add"),
                 scope: this,
-                icon: "resources/silkicons/brick_add.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_add.png",
                 handler: this.onAddClick
             }, {
                 text: i18n("Create new Part"),
                 scope: this,
-                icon: "resources/silkicons/brick_add.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_add.png",
                 handler: this.onAddPartClick
             },
             this.deleteButton, this.viewButton]
@@ -3039,28 +3051,28 @@ Ext.define("PartKeepr.AttachmentGrid", {
             disabled: true,
             itemId: "delete",
             scope: this,
-            icon: "resources/silkicons/delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/delete.png",
             handler: this.onDeleteClick
         });
         this.viewButton = Ext.create("Ext.button.Button", {
             text: i18n("View"),
             handler: this.onViewClick,
             scope: this,
-            icon: "resources/silkicons/zoom.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/zoom.png",
             disabled: true
         });
         this.webcamButton = Ext.create("Ext.button.Button", {
             text: i18n("Take image"),
             handler: this.onWebcamClick,
             scope: this,
-            icon: "resources/fugue-icons/icons/webcam.png"
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/webcam.png"
         });
         this.dockedItems = [{
             xtype: "toolbar",
             items: [{
                 text: i18n("Add"),
                 scope: this,
-                icon: "resources/silkicons/attach.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/attach.png",
                 handler: this.onAddClick
             },
             this.webcamButton, this.viewButton, this.deleteButton]
@@ -3206,7 +3218,7 @@ Ext.define("PartKeepr.UserPreferenceGrid", {
             disabled: true,
             itemId: "delete",
             scope: this,
-            icon: "resources/silkicons/delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/delete.png",
             handler: this.onDeleteClick
         });
         this.dockedItems = [{
@@ -3307,9 +3319,9 @@ Ext.define("PartKeepr.EditorGrid", {
     extend: "PartKeepr.BaseGrid",
     alias: "widget.EditorGrid",
     deleteButtonText: i18n("Delete Item"),
-    deleteButtonIcon: "resources/silkicons/delete.png",
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/delete.png",
     addButtonText: i18n("Add Item"),
-    addButtonIcon: "resources/silkicons/add.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/add.png",
     enableTopToolbar: true,
     buttonTextMode: "hide",
     initComponent: function () {
@@ -3403,9 +3415,9 @@ Ext.define("PartKeepr.ProjectGrid", {
         flex: 1
     }],
     addButtonText: i18n("Add Project"),
-    addButtonIcon: "resources/fugue-icons/icons/drill--plus.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/drill--plus.png",
     deleteButtonText: i18n("Delete Project"),
-    deleteButtonIcon: "resources/fugue-icons/icons/drill--minus.png"
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/drill--minus.png"
 });
 
 Ext.define("PartKeepr.ManufacturerGrid", {
@@ -3417,9 +3429,9 @@ Ext.define("PartKeepr.ManufacturerGrid", {
         flex: 1
     }],
     addButtonText: i18n("Add Manufacturer"),
-    addButtonIcon: "resources/silkicons/building_add.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/building_add.png",
     deleteButtonText: i18n("Delete Manufacturer"),
-    deleteButtonIcon: "resources/silkicons/building_delete.png"
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/building_delete.png"
 });
 
 Ext.define("PartKeepr.UserGrid", {
@@ -3431,9 +3443,9 @@ Ext.define("PartKeepr.UserGrid", {
         flex: 1
     }],
     addButtonText: i18n("Add User"),
-    addButtonIcon: "resources/silkicons/user_add.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/user_add.png",
     deleteButtonText: i18n("Delete User"),
-    deleteButtonIcon: "resources/silkicons/user_delete.png"
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/user_delete.png"
 });
 
 Ext.define("PartKeepr.PartUnitGrid", {
@@ -3456,10 +3468,10 @@ Ext.define("PartKeepr.PartUnitGrid", {
         }
     }],
     addButtonText: i18n("Add Part Measurement Unit"),
-    addButtonIcon: "resources/fugue-icons/icons/ruler--plus.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/ruler--plus.png",
     deleteButtonText: i18n("Delete Part Measurement Unit"),
-    deleteButtonIcon: "resources/fugue-icons/icons/ruler--minus.png",
-    defaultButtonIcon: "resources/fugue-icons/icons/ruler--pencil.png",
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/ruler--minus.png",
+    defaultButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/ruler--pencil.png",
     initComponent: function () {
         this.callParent();
         this.defaultButton = Ext.create("Ext.button.Button", {
@@ -3505,9 +3517,9 @@ Ext.define("PartKeepr.UnitGrid", {
         width: 60
     }],
     addButtonText: i18n("Add Unit"),
-    addButtonIcon: "resources/icons/unit_add.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/icons/unit_add.png",
     deleteButtonText: i18n("Delete Unit"),
-    deleteButtonIcon: "resources/icons/unit_delete.png",
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/icons/unit_delete.png",
     initComponent: function () {
         this.callParent()
     }
@@ -3522,9 +3534,9 @@ Ext.define("PartKeepr.DistributorGrid", {
         flex: 1
     }],
     addButtonText: i18n("Add Distributor"),
-    addButtonIcon: "resources/silkicons/lorry_add.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/lorry_add.png",
     deleteButtonText: i18n("Delete Distributor"),
-    deleteButtonIcon: "resources/silkicons/lorry_delete.png"
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/lorry_delete.png"
 });
 
 Ext.define("PartKeepr.StorageLocationGrid", {
@@ -3536,13 +3548,13 @@ Ext.define("PartKeepr.StorageLocationGrid", {
         flex: 1
     }],
     addButtonText: i18n("Add Storage Location"),
-    addButtonIcon: "resources/fugue-icons/icons/wooden-box--plus.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/wooden-box--plus.png",
     deleteButtonText: i18n("Delete Storage Location"),
-    deleteButtonIcon: "resources/fugue-icons/icons/wooden-box--minus.png",
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/wooden-box--minus.png",
     initComponent: function () {
         this.callParent();
         this.multiCreateButton = Ext.create("Ext.button.Button", {
-            icon: "resources/icons/storagelocation_multiadd.png",
+            icon: PartKeepr.getResourcePath() + "resources/icons/storagelocation_multiadd.png",
             tooltip: i18n("Multi-create storage locations"),
             handler: this.onMultiCreateClick,
             scope: this
@@ -3573,11 +3585,11 @@ Ext.define("PartKeepr.PartsGrid", {
     alias: "widget.PartsGrid",
     buttonTextMode: "show",
     addButtonText: i18n("Add Part"),
-    addButtonIcon: "resources/silkicons/brick_add.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/brick_add.png",
     deleteButtonText: i18n("Delete Part"),
-    deleteButtonIcon: "resources/silkicons/brick_delete.png",
-    expandRowButtonIcon: "resources/icons/group-expand.png",
-    collapseRowButtonIcon: "resources/icons/group-collapse.png",
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/silkicons/brick_delete.png",
+    expandRowButtonIcon: PartKeepr.getResourcePath() + "resources/icons/group-expand.png",
+    collapseRowButtonIcon: PartKeepr.getResourcePath() + "resources/icons/group-collapse.png",
     viewConfig: {
         plugins: {
             ddGroup: "CategoryTree",
@@ -3634,7 +3646,7 @@ Ext.define("PartKeepr.PartsGrid", {
             }, this),
             tooltip: i18n("Add a new part, using the selected part as template"),
             text: i18n("Create from Template"),
-            icon: "resources/silkicons/brick_link.png"
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_link.png"
         });
         this.topToolbar.insert(2, this.addFromTemplateButton)
     },
@@ -3846,7 +3858,7 @@ Ext.define("PartKeepr.PartParameterGrid", {
             disabled: true,
             itemId: "delete",
             scope: this,
-            icon: "resources/fugue-icons/icons/table--minus.png",
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/table--minus.png",
             handler: this.onDeleteClick
         });
         this.dockedItems = [{
@@ -3854,7 +3866,7 @@ Ext.define("PartKeepr.PartParameterGrid", {
             items: [{
                 text: i18n("Add"),
                 scope: this,
-                icon: "resources/fugue-icons/icons/table--plus.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/table--plus.png",
                 handler: this.onAddClick
             },
             this.deleteButton]
@@ -3975,7 +3987,7 @@ Ext.define("PartKeepr.PartManufacturerGrid", {
             disabled: true,
             itemId: "delete",
             scope: this,
-            icon: "resources/silkicons/building_delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/building_delete.png",
             handler: this.onDeleteClick
         });
         this.dockedItems = [{
@@ -3983,7 +3995,7 @@ Ext.define("PartKeepr.PartManufacturerGrid", {
             items: [{
                 text: "Add",
                 scope: this,
-                icon: "resources/silkicons/building_add.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/building_add.png",
                 handler: this.onAddClick
             },
             this.deleteButton]
@@ -4060,7 +4072,7 @@ Ext.define("PartKeepr.PartDistributorGrid", {
             disabled: true,
             itemId: "delete",
             scope: this,
-            icon: "resources/silkicons/lorry_delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/lorry_delete.png",
             handler: this.onDeleteClick
         });
         this.dockedItems = [{
@@ -4068,7 +4080,7 @@ Ext.define("PartKeepr.PartDistributorGrid", {
             items: [{
                 text: "Add",
                 scope: this,
-                icon: "resources/silkicons/lorry_add.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/lorry_add.png",
                 handler: this.onAddClick
             },
             this.deleteButton]
@@ -4151,19 +4163,19 @@ Ext.define("PartKeepr.GridMenuPlugin", {
             renderTo: Ext.getBody(),
             items: [{
                 text: i18n("Export"),
-                icon: "resources/fugue-icons/icons/application-export.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/application-export.png",
                 menu: [{
-                    icon: "resources/mimetypes/csv.png",
+                    icon: PartKeepr.getResourcePath() + "resources/mimetypes/csv.png",
                     text: "Export as CSV (.csv)",
                     handler: this.exportCSV,
                     scope: this
                 }, {
-                    icon: "resources/fugue-icons/icons/blue-document-excel.png",
+                    icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/blue-document-excel.png",
                     text: "Export as Excel XML (.xlsx)",
                     handler: this.exportXLSX,
                     scope: this
                 }, {
-                    icon: "resources/icons/mediawiki_icon.png",
+                    icon: PartKeepr.getResourcePath() + "resources/icons/mediawiki_icon.png",
                     text: "Export as MediaWiki table (.txt)",
                     handler: this.exportWiki,
                     scope: this
@@ -4316,7 +4328,7 @@ Ext.define("PartKeepr.UserPasswordChangePanel", {
                 handler: this.onChangePassword,
                 scope: this,
                 width: 145,
-                icon: "resources/silkicons/accept.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/accept.png",
                 text: i18n("Change Password")
             }
         }];
@@ -4936,7 +4948,7 @@ Ext.define("PartKeepr.WebcamPanel", {
     initComponent: function () {
         this.takePhotoButton = Ext.create("Ext.button.Button", {
             text: i18n("Take picture and upload"),
-            icon: "resources/fugue-icons/icons/webcam.png",
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/webcam.png",
             handler: this.takePhoto
         });
         this.bbar = Ext.create("Ext.toolbar.Toolbar", {
@@ -5180,7 +5192,7 @@ Ext.define("PartKeepr.FadingButton", {
 });
 Ext.define("PartKeepr.SystemNoticeButton", {
     extend: "PartKeepr.FadingButton",
-    icon: "resources/fugue-icons/icons/service-bell.png",
+    icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/service-bell.png",
     tooltip: i18n("Unacknowledged System Notices"),
     initComponent: function () {
         this.callParent();
@@ -5913,12 +5925,12 @@ Ext.define("PartKeepr.Editor", {
         if (this.enableButtons) {
             this.saveButton = Ext.create("Ext.button.Button", {
                 text: this.saveText,
-                icon: "resources/fugue-icons/icons/disk.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/disk.png",
                 handler: Ext.bind(this._onItemSave, this)
             });
             this.cancelButton = Ext.create("Ext.button.Button", {
                 text: this.cancelText,
-                icon: "resources/silkicons/cancel.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/cancel.png",
                 handler: Ext.bind(this.onCancelEdit, this)
             });
             this.bottomToolbar = Ext.create("Ext.toolbar.Toolbar", {
@@ -6011,7 +6023,7 @@ Ext.define("PartKeepr.SystemNoticeEditor", {
     initComponent: function () {
         this.acknowledgeButton = Ext.create("Ext.button.Button", {
             text: i18n("Acknowledge Notice"),
-            icon: "resources/silkicons/accept.png"
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/accept.png"
         });
         this.acknowledgeButton.on("click", this.onAcknowledgeClick, this);
         this.bottomToolbar = Ext.create("Ext.toolbar.Toolbar", {
@@ -6214,12 +6226,12 @@ Ext.define("PartKeepr.ManufacturerEditor", {
         this.on("startEdit", Ext.bind(this.onEditStart, this));
         this.tpl = ['<tpl for=".">', '<div class="thumb-wrap" id="{id}">', '<div class="thumb"><img src="image.php?type=iclogo&id={id}&w=64&h=64&tmpId={tmp_id}"></div>', "</div>", "</tpl>", "</tpl>", '<div class="x-clear"></div>'];
         this.addLogoButton = Ext.create("Ext.button.Button", {
-            icon: "resources/silkicons/add.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/add.png",
             text: i18n("Add Logo"),
             handler: Ext.bind(this.uploadImage, this)
         });
         this.deleteLogoButton = Ext.create("Ext.button.Button", {
-            icon: "resources/silkicons/delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/delete.png",
             text: i18n("Delete Logo"),
             disabled: true,
             handler: Ext.bind(this.deleteImage, this)
@@ -6794,78 +6806,78 @@ Ext.define("PartKeepr.MenuBar", {
         this.editMenu = Ext.create("Ext.menu.Menu", {
             items: [{
                 text: i18n("Projects"),
-                icon: "resources/fugue-icons/icons/drill.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/drill.png",
                 handler: this.editProjects
             }, {
                 text: i18n("Footprints"),
-                icon: "resources/fugue-icons/icons/fingerprint.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/fingerprint.png",
                 handler: this.editFootprints
             }, {
                 text: i18n("Manufacturers"),
-                icon: "resources/silkicons/building.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/building.png",
                 handler: this.editManufacturers
             }, {
                 text: i18n("Storage Locations"),
-                icon: "resources/fugue-icons/icons/wooden-box.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/wooden-box.png",
                 handler: this.editStorageLocations
             }, {
                 text: i18n("Distributors"),
-                icon: "resources/silkicons/lorry.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/lorry.png",
                 handler: this.editDistributors
             }, {
                 text: i18n("Users"),
                 id: "edit-users",
                 handler: this.editUsers,
-                icon: "resources/silkicons/user.png"
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/user.png"
             }, {
                 text: i18n("Part Measure Units"),
                 handler: this.editPartUnits,
-                icon: "resources/fugue-icons/icons/ruler.png"
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/ruler.png"
             }, {
                 text: i18n("Units"),
                 handler: this.editUnits,
-                icon: "resources/icons/unit.png"
+                icon: PartKeepr.getResourcePath() + "resources/icons/unit.png"
             }]
         });
         this.viewMenu = Ext.create("Ext.menu.Menu", {
             items: [{
                 text: i18n("Statistics"),
-                icon: "resources/silkicons/chart_bar.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/chart_bar.png",
                 menu: [{
                     text: i18n("Summary"),
                     handler: this.showStatisticsSummary,
-                    icon: "resources/silkicons/chart_bar.png"
+                    icon: PartKeepr.getResourcePath() + "resources/silkicons/chart_bar.png"
                 }, {
                     text: i18n("Chart"),
                     handler: this.showStatisticsChart,
-                    icon: "resources/silkicons/chart_bar.png"
+                    icon: PartKeepr.getResourcePath() + "resources/silkicons/chart_bar.png"
                 }]
             }, {
                 text: i18n("System Information"),
                 handler: this.showSystemInformation,
-                icon: "resources/fugue-icons/icons/system-monitor.png"
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/system-monitor.png"
             }, {
                 text: i18n("Project Reports"),
                 handler: this.showProjectReports,
-                icon: "resources/fugue-icons/icons/drill.png"
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/drill.png"
             }, {
                 text: i18n("System Notices"),
                 handler: this.showSystemNotices,
-                icon: "resources/fugue-icons/icons/service-bell.png"
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/service-bell.png"
             }, {
                 text: i18n("Stock History"),
                 handler: this.showStockHistory,
-                icon: "resources/fugue-icons/icons/notebook.png"
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/notebook.png"
             }]
         });
         this.systemMenu = Ext.create("Ext.menu.Menu", {
             items: [{
                 text: i18n("Disconnect"),
-                icon: "resources/silkicons/disconnect.png",
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/disconnect.png",
                 handler: this.disconnect
             }, {
                 text: i18n("User Preferences"),
-                icon: "resources/fugue-icons/icons/gear.png",
+                icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/gear.png",
                 handler: this.showUserPreferences
             }]
         });
@@ -7044,7 +7056,7 @@ Ext.define("PartKeepr.StorageLocationMultiCreateWindow", {
         this.items = [this.form];
         this.addButton = Ext.create("Ext.button.Button", {
             text: i18n("Create Storage Locations"),
-            icon: "resources/silkicons/add.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/add.png",
             handler: this.onAddClick,
             scope: this
         });
@@ -7061,7 +7073,7 @@ Ext.define("PartKeepr.StorageLocationMultiCreateWindow", {
                 text: i18n("Close"),
                 handler: this.onCloseClick,
                 scope: this,
-                icon: "resources/silkicons/cancel.png"
+                icon: PartKeepr.getResourcePath() + "resources/silkicons/cancel.png"
             }]
         }];
         this.callParent()
@@ -7347,17 +7359,17 @@ Ext.define("PartKeepr.CategoryEditorTree", {
         this.menuCategoryDelete = Ext.create("Ext.menu.Item", {
             text: i18n("Delete Category"),
             handler: Ext.bind(this.confirmCategoryDelete, this),
-            icon: "resources/silkicons/folder_delete.png"
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/folder_delete.png"
         });
         this.menuCategoryAdd = Ext.create("Ext.menu.Item", {
             text: i18n("Add Category"),
             handler: Ext.bind(this.showCategoryAddDialog, this),
-            icon: "resources/silkicons/folder_add.png"
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/folder_add.png"
         });
         this.menuCategoryEdit = Ext.create("Ext.menu.Item", {
             text: i18n("Edit Category"),
             handler: Ext.bind(this.showCategoryEditDialog, this),
-            icon: "resources/silkicons/folder_edit.png"
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/folder_edit.png"
         });
         this.menu = Ext.create("widget.menu", {
             items: [this.menuCategoryAdd, this.menuCategoryEdit, this.menuCategoryDelete]
@@ -7365,13 +7377,13 @@ Ext.define("PartKeepr.CategoryEditorTree", {
     },
     createToolbar: function () {
         this.toolbarExpandButton = Ext.create("Ext.button.Button", {
-            icon: "resources/fugue-icons/icons/toggle-expand.png",
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/toggle-expand.png",
             tooltip: i18n("Expand All"),
             handler: this._onExpandClick,
             scope: this
         });
         this.toolbarCollapseButton = Ext.create("Ext.button.Button", {
-            icon: "resources/fugue-icons/icons/toggle.png",
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/toggle.png",
             tooltip: i18n("Collapse All"),
             handler: this._onCollapseClick,
             scope: this
@@ -7460,8 +7472,8 @@ Ext.define("PartKeepr.FootprintTree", {
     categoryModel: "PartKeepr.FootprintCategory",
     categoryService: "FootprintCategory",
     folderSort: true,
-    addButtonIcon: "resources/icons/footprint_add.png",
-    deleteButtonIcon: "resources/icons/footprint_delete.png",
+    addButtonIcon: PartKeepr.getResourcePath() + "resources/icons/footprint_add.png",
+    deleteButtonIcon: PartKeepr.getResourcePath() + "resources/icons/footprint_delete.png",
     initComponent: function () {
         this.callParent();
         this.addEvents("itemEdit");
@@ -7594,7 +7606,7 @@ Ext.define("PartKeepr.PartCategoryTree", {
         this.callParent();
         this.syncButton = Ext.create("Ext.button.Button", {
             tooltip: i18n("Reveal Category for selected part"),
-            icon: "resources/fugue-icons/icons/arrow-split-180.png",
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/arrow-split-180.png",
             handler: Ext.bind(function () {
                 this.fireEvent("syncCategory")
             }, this),
@@ -7976,12 +7988,12 @@ Ext.define("PartKeepr.PartEditorWindow", {
         this.editor.on("itemSaved", this.onItemSaved, this);
         this.saveButton = Ext.create("Ext.button.Button", {
             text: this.saveText,
-            icon: "resources/fugue-icons/icons/disk.png",
+            icon: PartKeepr.getResourcePath() + "resources/fugue-icons/icons/disk.png",
             handler: Ext.bind(this.onItemSave, this)
         });
         this.cancelButton = Ext.create("Ext.button.Button", {
             text: this.cancelText,
-            icon: "resources/silkicons/cancel.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/cancel.png",
             handler: Ext.bind(this.onCancelEdit, this)
         });
         this.bottomToolbar = Ext.create("Ext.toolbar.Toolbar", {
@@ -8047,12 +8059,12 @@ Ext.define("PartKeepr.PartFilterPanel", {
         this.resetButton = Ext.create("Ext.button.Button", {
             text: i18n("Reset"),
             handler: this.onReset,
-            icon: "resources/diagona-icons/icons/16/101.png",
+            icon: PartKeepr.getResourcePath() + "resources/diagona-icons/icons/16/101.png",
             scope: this
         });
         this.applyButton = Ext.create("Ext.button.Button", {
             text: i18n("Apply"),
-            icon: "resources/diagona-icons/icons/16/102.png",
+            icon: PartKeepr.getResourcePath() + "resources/diagona-icons/icons/16/102.png",
             handler: this.onApply,
             scope: this
         });
@@ -8153,17 +8165,17 @@ Ext.define("PartKeepr.PartDisplay", {
         this.tpl = new Ext.XTemplate("<h1>{name}</h1>", "<table>", "<tr>", '<td class="o">' + i18n("Category") + ":</td>", '<td style="width: 100%;" class="o">{categoryName}</td>', "</tr>", "<tr>", '<td class="e">' + i18n("Stock Level") + ":</td>", '<td class="e">{stockLevel}</td>', "</tr>", "<tr>", '<td class="o">' + i18n("Minimum Stock Level") + ":</td>", '<td class="o">{minStockLevel}</td>', "</tr>", "<tr>", '<td class="e">' + i18n("Footprint") + ":</td>", '<td class="e">{footprintName}</td>', "</tr>", "<tr>", '<td style="white-space: nowrap;" class="o">' + i18n("Storage Location") + ":</td>", '<td class="o">{storageLocationName}</td>', "</tr>", "<tr>", '<td class="e">' + i18n("Comment") + ":</td>", '<td class="e">{comment}</td>', "</tr>", "<tr>", '<td class="o">' + i18n("Create Date") + ":</td>", '<td class="o">{createDate}</td>', "</tr>", "<tr>", '<td class="e">' + i18n("Status") + ":</td>", '<td class="e">{status}</td>', "</tr>", "<tr>", '<td class="o">' + i18n("Needs Review") + ":</td>", '<td class="o">{needsReview}</td>', "</tr>", "</table>");
         this.addButton = new Ext.Button({
             text: i18n("Add Stock"),
-            icon: "resources/silkicons/brick_add.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_add.png",
             handler: Ext.bind(this.addPartPrompt, this)
         });
         this.deleteButton = new Ext.Button({
             text: i18n("Remove Stock"),
-            icon: "resources/silkicons/brick_delete.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_delete.png",
             handler: Ext.bind(this.deletePartPrompt, this)
         });
         this.editButton = new Ext.Button({
             text: i18n("Edit Part"),
-            icon: "resources/silkicons/brick_edit.png",
+            icon: PartKeepr.getResourcePath() + "resources/silkicons/brick_edit.png",
             handler: Ext.bind(function () {
                 this.fireEvent("editPart", this.record.get("id"))
             }, this)

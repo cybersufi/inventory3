@@ -20,29 +20,12 @@ class Auth extends CI_Controller {
 		$sess_id = $this->session->userdata('id');
 		$data = array();
 		$data['base_url'] = base_url();
-		$pass = $this->decrypt($this->input->post('password'));
-		print_r($pass);
-		/*if (empty($sess_id)) {
-			$config = array(
-				array(
-					'field'   => 'username', 
-					'label'   => 'Username', 
-					'rules'   => 'required'
-				), array(
-					'field'   => 'password', 
-					'label'   => 'Password', 
-					'rules'   => 'required'
-				)
-			);
-			
-			$this->form_validation->set_rules($config);
-			
-			if ($this->form_validation->run()) {
+		if (empty($sess_id)) {
+			$user = $this->input->getJsonParameter('username');
+			$pass = $this->decrypt($this->input->getJsonParameter('password'));	
+			if ((strlen($user) > 0) && (strlen($pass) > 0)) {
 				try {
-					$res = $this->redux_auth->login (
-						$this->input->post('username'),
-						$this->decrypt($this->input->post('password'))
-					);	
+					$res = $this->libauth->login ($user,$pass);	
 					
 					$data['status'] = 'ok';
 					$data['success'] = true;
@@ -69,7 +52,7 @@ class Auth extends CI_Controller {
 			$data['result'] = $e->serialize();
 		}
 
-		//$this->load->view('administrator/result', $data);*/
+		$this->load->view('administrator/result', $data);
 	}
 	
 	public function doLogout() {

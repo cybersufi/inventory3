@@ -20,10 +20,9 @@ class Auth extends CI_Controller {
 		$sess_id = $this->session->userdata('id');
 		$data = array();
 		$data['base_url'] = base_url();
-		$test = json_decode($this->input->post());
-		print_r($test);
 		$pass = $this->decrypt($this->input->post('password'));
-		if (empty($sess_id)) {
+		print_r($pass);
+		/*if (empty($sess_id)) {
 			$config = array(
 				array(
 					'field'   => 'username', 
@@ -70,7 +69,7 @@ class Auth extends CI_Controller {
 			$data['result'] = $e->serialize();
 		}
 
-		$this->load->view('administrator/result', $data);
+		//$this->load->view('administrator/result', $data);*/
 	}
 	
 	public function doLogout() {

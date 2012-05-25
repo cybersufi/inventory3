@@ -26,6 +26,7 @@
 <script type="text/javascript">
 	window.parameters = {
 		"basePath":"<?php echo base_url('administrator'); ?>",
+		"baseResource":"<?php echo base_url('frontend/administrator/'); ?>",
 		"doctrine_orm_version":"2.2.2",
 		"doctrine_dbal_version":"2.2.2",
 		"doctrine_common_version":"2.2.2",

@@ -83,7 +83,7 @@ Ext.define("Administrator.Grid.GridMenuPlugin", {
 	 * @param filename {String} The filename
 	 */
 	doExport: function (data, filename) {
-		var call = new PartKeepr.ServiceCall("TempFile", "jsonUpload");
+		var call = new Administrator.Util.ServiceCall("TempFile", "jsonUpload");
 		call.setParameter("filedata", Ext.ux.exporter.Base64.encode(data));
 		call.setParameter("filename", filename);
 		call.setHandler(function (response) {

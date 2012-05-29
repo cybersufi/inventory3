@@ -3,7 +3,6 @@ Ext.Loader.setConfig({
     enabled : true,
     paths   : {
         'Administrator' : 'frontend/administrator/js/App',
-        'Ext' : 'frontend/administrator/js/ExtJS',
         'Ext.ux' : 'frontend/administrator/js/Ext.ux'
     } 
 });
@@ -14,6 +13,9 @@ Administrator.resourcePath = null;
 Administrator.resourcePath = window.parameters.baseResource;
 Ext.application({
     name: "Administrator",
+    require: [
+    	'Ext.container',
+    ],
     appFolder: "frontend/administrator/js/App",
     launch: function () {
     	Ext.setLocale("en_US");
@@ -143,7 +145,7 @@ Ext.application({
             bodyStyle: "background:#DBDBDB",
             plugins: Ext.create("Ext.ux.TabCloseMenu")
         });
-        this.menuBar = Ext.create("Administrator.MenuBar");
+        this.menuBar = Ext.create("Administrator.Components.MenuBar");
         this.menuBar.disable();
         Ext.create("Ext.container.Viewport", {
             layout: "fit",
@@ -163,7 +165,7 @@ Ext.application({
     },
     
     createMessageLog: function () {
-        return Ext.create("Administrator.MessageLog", {
+        return Ext.create("Administrator.Components.MessageLog", {
             height: 200,
             hidden: true,
             split: true,
@@ -249,6 +251,57 @@ Ext.locales = {
         name: "English (USA)",
         dateformat: "n/j/Y H:i:s T"
     }
+};
+
+Administrator.getApplication = function () {
+    return PartKeepr.application
+};
+
+Administrator.setBasePath = function (a) {
+	PartKeepr.basePath = a;
+}
+
+Administrator.getBasePath = function () {
+    return PartKeepr.basePath;
+    //return window.parameters.basePath;
+};
+
+Administrator.setResourcePath = function (a) {
+	PartKeepr.resourcePath = a;
+}
+
+Administrator.getResourcePath = function () {
+    return PartKeepr.resourcePath;
+    //return window.parameters.basePath;
+};
+
+Administrator.getImagePath = function () {
+    return "image.php"
+};
+
+Administrator.setMaxUploadSize = function (a) {
+    PartKeepr.maxUploadSize = a
+};
+
+Administrator.getMaxUploadSize = function () {
+    return PartKeepr.maxUploadSize
+};
+
+Administrator.bytesToSize = function (a) {
+    var c = ["Bytes", "KB", "MB", "GB", "TB"];
+    if (a === 0) {
+        return "n/a"
+    }
+    var b = parseInt(Math.floor(Math.log(a) / Math.log(1024)), 10);
+    return Math.round(a / Math.pow(1024, b), 2) + " " + c[b]
+};
+
+Administrator.serializeRecords = function (b) {
+    var a = [];
+    for (var c = 0; c < b.length; c++) {
+        a.push(b[c].data)
+    }
+    return a
 };
 
 Ext.setLocale = function (a) {

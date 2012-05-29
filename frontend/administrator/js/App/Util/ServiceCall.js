@@ -48,7 +48,7 @@ Ext.define('Administrator.Util.ServiceCall', {
 	},
 	doCall: function () {
 		/* Update the status bar to indicate that the call is in progress. */
-		PartKeepr.getApplication().getStatusbar().startLoad(this.loadMessage);
+		Administrator.getApplication().getStatusbar().startLoad(this.loadMessage);
 		
 		var callDefinition = Ext.encode(this.parameters);
 		
@@ -58,11 +58,11 @@ Ext.define('Administrator.Util.ServiceCall', {
 		};
 		
 		if (!this.anonymous) {
-			headers.session = PartKeepr.getApplication().getSessionManager().getSession();
+			headers.session = Administrator.getApplication().getSessionManager().getSession();
 		}
 		
 		Ext.Ajax.request({
-			url: PartKeepr.getBasePath() + '/' + this.service + "/"+this.call,
+			url: Administrator.getBasePath() + '/' + this.service + "/"+this.call,
 			success: Ext.bind(this.onSuccess, this),
 			failure: Ext.bind(this.onError, this),
 			method: "POST",
@@ -71,14 +71,14 @@ Ext.define('Administrator.Util.ServiceCall', {
 		});
 	},
 	onSuccess: function (responseObj, options) {
-		PartKeepr.getApplication().getStatusbar().endLoad();
+		Administrator.getApplication().getStatusbar().endLoad();
 		
 		try {
 			var response = Ext.decode(responseObj.responseText);	
 		} catch (ex) {
 			var exception = {
-        			message: i18n("Critical Error"),
-        			detail: i18n("The server returned a response which we were not able to interpret.")
+        			message: "Critical Error",
+        			detail: "The server returned a response which we were not able to interpret."
         	};
         	
      	
@@ -95,7 +95,7 @@ Ext.define('Administrator.Util.ServiceCall', {
 		/* Check the status */
 		if (response.status == "error") {
 			this.displayError(response.exception);
-			PartKeepr.getApplication().getStatusbar().setStatus({
+			Administrator.getApplication().getStatusbar().setStatus({
 				text: this.getErrorMessage(response.exception),
 				iconCls: 'x-status-error',
 				clear: {
@@ -109,7 +109,7 @@ Ext.define('Administrator.Util.ServiceCall', {
 		/* Check the status */
 		if (response.status == "systemerror") {
 			this.displaySystemError(response);
-			PartKeepr.getApplication().getStatusbar().setStatus({
+			Administrator.getApplication().getStatusbar().setStatus({
 				text: this.getErrorMessage(response),
 				iconCls: 'x-status-error',
 				clear: {
@@ -142,8 +142,8 @@ Ext.define('Administrator.Util.ServiceCall', {
         	PartKeepr.ExceptionWindow.showException(data.exception, request);
         } catch (ex) {
         	var exception = {
-        			message: i18n("Critical Error"),
-        			detail: i18n("The server returned a response which we were not able to interpret."),
+        			message: "Critical Error",
+        			detail: "The server returned a response which we were not able to interpret.",
         			backtrace: response.responseText
         	};
         	
@@ -157,11 +157,11 @@ Ext.define('Administrator.Util.ServiceCall', {
         	
         }
         
-		PartKeepr.getApplication().getStatusbar().endLoad();
+		Administrator.getApplication().getStatusbar().endLoad();
 	},
 	displayError: function (obj) {
 		Ext.Msg.show({
-			title: i18n("Error"),
+			title: "Error",
 			msg: this.getErrorMessage(obj),
 			buttons: Ext.MessageBox.OK,
 			icon: Ext.MessageBox.ERROR
@@ -189,7 +189,7 @@ Ext.define('Administrator.Util.ServiceCall', {
 		Ext.Msg.maxWidth = 800;
 		
 		Ext.Msg.show({
-			title: i18n("System Error"),
+			title: "System Error",
 			msg: errorMsg,
 			buttons: Ext.MessageBox.OK,
 			icon: Ext.MessageBox.ERROR

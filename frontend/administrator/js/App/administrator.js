@@ -1,10 +1,9 @@
 Ext.namespace("Administrator");
-//Ext.Loader.setPath("Administrator","frontend/administrator/js");
 Ext.Loader.setConfig({
     enabled : true,
     paths   : {
         'Administrator' : 'frontend/administrator/js/App',
-        'Ext' : 'frontend/administrator/js/Ext',
+        'Ext' : 'frontend/administrator/js/ExtJS',
         'Ext.ux' : 'frontend/administrator/js/Ext.ux'
     } 
 });
@@ -17,6 +16,7 @@ Ext.application({
     name: "Administrator",
     appFolder: "frontend/administrator/js/App",
     launch: function () {
+    	Ext.setLocale("en_US");
         Ext.get("loading").hide();
         this.createLayout();
         Administrator.application = this;
@@ -55,7 +55,7 @@ Ext.application({
     },
     
     doSystemStatusCheck: function () {
-        var a = new Administrator.ServiceCall("System", "getSystemStatus");
+        var a = new Administrator.Util.ServiceCall("System", "getSystemStatus");
         a.setHandler(Ext.bind(this.onSystemStatusCheck, this));
         a.doCall()
     },
@@ -74,7 +74,7 @@ Ext.application({
     },
     
     doUnacknowledgedNoticesCheck: function () {
-        var a = new PartKeepr.ServiceCall("SystemNotice", "hasUnacknowledgedNotices");
+        var a = new Administrator.Util.ServiceCall("SystemNotice", "hasUnacknowledgedNotices");
         a.setHandler(Ext.bind(this.onUnacknowledgedNoticesCheck, this));
         a.doCall()
     },
@@ -238,16 +238,31 @@ Ext.application({
     }
 });
 
-Ext.define("PartKeepr.ConnectionButton", {
-    extend: "Ext.Button",
-    connectedIcon: "frontend/administrator/resources/silkicons/connect.png",
-    disconnectedIcon: "frontend/administrator/resources/silkicons/disconnect.png",
-    cls: "x-btn-icon",
-    icon: "frontend/administrator/resources/silkicons/disconnect.png",
-    setConnected: function () {
-        this.setIcon(this.connectedIcon)
+Ext.locales = {
+    de_DE: {
+        flag: "de",
+        name: "Deutsch (Deutschland)",
+        dateformat: "d.m.Y H:i:s T"
     },
-    setDisconnected: function () {
-        this.setIcon(this.disconnectedIcon)
+    en_US: {
+        flag: "us",
+        name: "English (USA)",
+        dateformat: "n/j/Y H:i:s T"
     }
-});
+};
+
+Ext.setLocale = function (a) {
+    Ext.jm_locale = a
+};
+
+Ext.getLocale = function () {
+    return Ext.jm_locale
+};
+
+Ext.getLocaleFlag = function () {
+    return Ext.locales[Ext.jm_locale].flag
+};
+
+Ext.getDateFormat = function () {
+    return Ext.locales[Ext.jm_locale].dateformat
+};	

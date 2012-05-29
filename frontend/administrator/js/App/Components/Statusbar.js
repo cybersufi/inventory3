@@ -8,13 +8,12 @@ Ext.define('Administrator.Components.Statusbar', {
 	iconCls: 'x-status-valid',
 	autoClear: 3000,
 	initComponent: function () {
-		
-		this.connectionButton = new Administrator.Widgets.ConnectionButton();
+		this.connectionButton = Ext.create("Administrator.Widgets.ConnectionButton");
 		this.connectionButton.on("click", this.onConnectionButtonClick, this);
-		this.timeDisplay = new PartKeepr.TimeDisplay();
+		this.timeDisplay = Ext.create("Administrator.Components.TimeDisplay");
 		this.currentUserDisplay = Ext.create("Ext.toolbar.TextItem");
 		
-		this.currentUserDisplay.setText(i18n("Not logged in"));
+		this.currentUserDisplay.setText("Not logged in");
 		
 		this.showMessageLog = Ext.create("Ext.Button",{
 			icon: 'resources/silkicons/application_osx_terminal.png',
@@ -24,7 +23,7 @@ Ext.define('Administrator.Components.Statusbar', {
 			}
 		});
 		
-		this.systemNoticeButton = Ext.create("Administrator.SystemNoticeButton", {
+		this.systemNoticeButton = Ext.create("Administrator.Widgets.SystemNoticeButton", {
 			hidden: true
 		});
 		

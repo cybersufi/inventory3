@@ -1,10 +1,10 @@
 /**
  * Defines the login dialog
  */
-Ext.define('PartKeepr.LoginDialog', {
+Ext.define('Administrator.Components.Auth.LoginDialog', {
 	extend: 'Ext.Window',
 	/* Various style settings */
-	title: i18n("PartKeepr: Login"),
+	title: "Administrator: Login",
 	
 	width: 400,
 	height: 125,
@@ -24,7 +24,7 @@ Ext.define('PartKeepr.LoginDialog', {
 		this.loginField = Ext.ComponentMgr.create({
 	    	xtype: 'textfield',
 	    	value: "",
-	    	fieldLabel: i18n("Username"),
+	    	fieldLabel: "Username",
 	    	anchor: '100%'
 	    });
 
@@ -32,7 +32,7 @@ Ext.define('PartKeepr.LoginDialog', {
         	xtype: 'textfield',
         	inputType: "password",
         	value: "",
-        	fieldLabel: i18n("Password"),
+        	fieldLabel: "Password",
         	anchor: '100%'
         });
 		
@@ -56,11 +56,11 @@ Ext.define('PartKeepr.LoginDialog', {
 			       defaults: {minWidth: 100},
 			       items: [
 			       	{
-			       		text: i18n("Connect"),
+			       		text: "Connect",
 			       		icon: 'frontend/administrator/resources/silkicons/connect.png',
 			       		handler: Ext.bind(this.login, this)
 			       	},{
-			       		text: i18n("Close"),
+			       		text: "Close",
 			       		handler: Ext.bind(this.close, this),
 			       		icon: 'frontend/administrator/resources/silkicons/cancel.png'
 			       	}]

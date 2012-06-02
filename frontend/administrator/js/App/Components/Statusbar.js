@@ -15,13 +15,13 @@ Ext.define('Administrator.Components.Statusbar', {
 		
 		this.currentUserDisplay.setText("Not logged in");
 		
-		this.showMessageLog = Ext.create("Ext.Button",{
+		/*this.showMessageLog = Ext.create("Ext.Button",{
 			icon: 'resources/silkicons/application_osx_terminal.png',
 			cls: 'x-btn-icon',
 			handler: function () {
 				Administrator.getApplication().toggleMessageLog();
 			}
-		});
+		});*/
 		
 		this.systemNoticeButton = Ext.create("Administrator.Widgets.SystemNoticeButton", {
 			hidden: true
@@ -33,8 +33,8 @@ Ext.define('Administrator.Components.Statusbar', {
 			        {xtype: 'tbseparator'},
 			        this.timeDisplay,
 			        { xtype: 'tbseparator' },
-			        this.showMessageLog,
-			        { xtype: 'tbseparator' },
+			        //this.showMessageLog,
+			        //{ xtype: 'tbseparator' },
 			        this.connectionButton,
 			        this.systemNoticeButton
 			        
@@ -48,7 +48,7 @@ Ext.define('Administrator.Components.Statusbar', {
 		return this.connectionButton;
 	},
 	setCurrentUser: function (username) {
-		this.currentUserDisplay.setText(i18n("Logged in as")+": "+username);
+		this.currentUserDisplay.setText("Logged in as"+": "+username);
 	},
 	startLoad: function (message) {
 		if (message !== null) {
@@ -64,7 +64,7 @@ Ext.define('Administrator.Components.Statusbar', {
 		if (Administrator.getApplication().getSession()) {
 			Administrator.getApplication().logout();
 		} else {
-			var o = new Administrator.LoginDialog();
+			var o = new Administrator.Component.Auth.LoginDialog();
 	    	o.show();
 		}
 	}

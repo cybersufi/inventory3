@@ -24,7 +24,8 @@ Ext.application({
         Administrator.application = this;
         Administrator.setBasePath(window.parameters.basePath);
         Administrator.setResourcePath(window.parameters.baseResource);
-        this.sessionManager = new Administrator.SessionManager();
+        //this.sessionManager = new Administrator.Components.Session.SessionManager();
+        this.sessionManager = Ext.create("Administrator.Components.Session.SessionManager");
         if (window.parameters.auto_start_session) {
             this.getSessionManager().setSession(window.parameters.auto_start_session);
             this.getStatusbar().connectionButton.hide();
@@ -137,7 +138,7 @@ Ext.application({
     
     createLayout: function () {
         this.statusBar = Ext.create("Administrator.Components.Statusbar");
-        this.messageLog = this.createMessageLog();
+        //this.messageLog = this.createMessageLog();
         this.centerPanel = Ext.create("Ext.tab.Panel", {
             xtype: "tabpanel",
             border: false,
@@ -153,7 +154,7 @@ Ext.application({
                 xtype: "panel",
                 border: false,
                 layout: "border",
-                items: [this.centerPanel, this.messageLog],
+                items: [this.centerPanel],
                 bbar: this.statusBar,
                 tbar: this.menuBar
             }]
@@ -254,24 +255,24 @@ Ext.locales = {
 };
 
 Administrator.getApplication = function () {
-    return PartKeepr.application
+    return Administrator.application
 };
 
 Administrator.setBasePath = function (a) {
-	PartKeepr.basePath = a;
+	Administrator.basePath = a;
 }
 
 Administrator.getBasePath = function () {
-    return PartKeepr.basePath;
+    return Administrator.basePath;
     //return window.parameters.basePath;
 };
 
 Administrator.setResourcePath = function (a) {
-	PartKeepr.resourcePath = a;
+	Administrator.resourcePath = a;
 }
 
 Administrator.getResourcePath = function () {
-    return PartKeepr.resourcePath;
+    return Administrator.resourcePath;
     //return window.parameters.basePath;
 };
 
@@ -280,11 +281,11 @@ Administrator.getImagePath = function () {
 };
 
 Administrator.setMaxUploadSize = function (a) {
-    PartKeepr.maxUploadSize = a
+    Administrator.maxUploadSize = a
 };
 
 Administrator.getMaxUploadSize = function () {
-    return PartKeepr.maxUploadSize
+    return Administrator.maxUploadSize
 };
 
 Administrator.bytesToSize = function (a) {

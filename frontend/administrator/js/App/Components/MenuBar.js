@@ -83,11 +83,11 @@ Ext.define('Administrator.Components.MenuBar', {
 			items: [
 			{
 	        	text: 'Disconnect',
-	        	icon: 'resources/silkicons/disconnect.png',
+	        	icon: Administrator.getResourcePath() + 'resources/silkicons/disconnect.png',
 	        	handler: this.disconnect
 	        },{
 	        	text: "User Preferences",
-	        	icon: 'resources/fugue-icons/icons/gear.png',
+	        	icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/gear.png',
 	        	handler: this.showUserPreferences
 	        }
 			]

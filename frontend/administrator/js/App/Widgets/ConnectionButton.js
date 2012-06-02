@@ -1,9 +1,9 @@
 Ext.define('Administrator.Widgets.ConnectionButton', {
 	extend: 'Ext.Button',
-	connectedIcon: 'resources/silkicons/connect.png',
-	disconnectedIcon: 'resources/silkicons/disconnect.png',
+	connectedIcon: Administrator.getResourcePath() + 'resources/silkicons/connect.png',
+	disconnectedIcon: Administrator.getResourcePath() + 'resources/silkicons/disconnect.png',
 	cls: 'x-btn-icon',
-	icon: 'resources/silkicons/disconnect.png',
+	icon: Administrator.getResourcePath() + 'resources/silkicons/disconnect.png',
 	//tooltip: i18n("Disconnected"),
 	setConnected: function () {
 		this.setIcon(this.connectedIcon);

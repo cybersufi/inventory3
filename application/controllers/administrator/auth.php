@@ -26,6 +26,11 @@ class Auth extends CI_Controller {
 			if ((strlen($user) > 0) && (strlen($pass) > 0)) {
 				try {
 					$res = $this->libauth->login($user,$pass);	
+					$res = array (
+						'sessionid' => $this->session->userdata('session_id'),
+						'username' => $this->session->userdata('uname'),
+						'admin' => $this->session->userdata('issiteadmin')
+					);
 					
 					$data['status'] = 'ok';
 					$data['success'] = true;

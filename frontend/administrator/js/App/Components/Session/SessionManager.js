@@ -57,6 +57,7 @@ Ext.define("Administrator.Components.Session.SessionManager", {
 	 * @param password The password, as entered
 	 */
 	onLogin: function (username, password) {
+		//Ext.require('Administrator.Util.ServiceCall');
 		var k = new Administrator.Util.ServiceCall("Auth", "login");
 		k.setParameter("username", username);
 		k.setParameter("password", md5(password));

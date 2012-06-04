@@ -24,7 +24,6 @@ Ext.application({
         Administrator.application = this;
         Administrator.setBasePath(window.parameters.basePath);
         Administrator.setResourcePath(window.parameters.baseResource);
-        //this.sessionManager = new Administrator.Components.Session.SessionManager();
         this.sessionManager = Ext.create("Administrator.Components.Session.SessionManager");
         if (window.parameters.auto_start_session) {
             this.getSessionManager().setSession(window.parameters.auto_start_session);

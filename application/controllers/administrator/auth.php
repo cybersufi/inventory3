@@ -25,7 +25,7 @@ class Auth extends CI_Controller {
 			$pass = $this->decrypt($this->input->getJsonParameter('password'));	
 			if ((strlen($user) > 0) && (strlen($pass) > 0)) {
 				try {
-					$res = $this->libauth->login ($user,$pass);	
+					$res = $this->libauth->login($user,$pass);	
 					
 					$data['status'] = 'ok';
 					$data['success'] = true;

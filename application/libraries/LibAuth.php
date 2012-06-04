@@ -868,7 +868,7 @@
 									   $users_tbl.'.id, '.
 									   $users_tbl.'.activation_code, '.
 									   $users_tbl.'.banned_id, '.
-									   $banned_tbl.'.reason')	
+									   $banned_tbl.'.reason')
 			->from($users_tbl)
 			->join($banned_tbl, $users_tbl.'.banned_id = '.$banned_tbl.'.id', 'left')
 			->where($users_tbl.'.username', $username)

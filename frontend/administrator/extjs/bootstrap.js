@@ -1,27 +1,21 @@
 /*
-This file is part of Ext JS 4.1
 
-Copyright (c) 2011-2012 Sencha Inc
+This file is part of Ext JS 4
+
+Copyright (c) 2011 Sencha Inc
 
 Contact:  http://www.sencha.com/contact
 
 GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
+This file may be used under the terms of the GNU General Public License version 3.0 as published by the Free Software Foundation and appearing in the file LICENSE included in the packaging of this file.  Please review the following information to ensure the GNU General Public License version 3.0 requirements will be met: http://www.gnu.org/copyleft/gpl.html.
 
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
+If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
 
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
-
-Build date: 2012-04-20 14:10:47 (19f55ab932145a3443b228045fa80950dfeaf9cc)
 */
 /**
  * Load the library located at the same path with this file
  *
- * Will automatically load ext-all-dev.js if any of these conditions is true:
+ * Will automatically load ext-all-debug.js if any of these conditions is true:
  * - Current hostname is localhost
  * - Current hostname is an IP v4 address
  * - Current protocol is "file:"
@@ -29,6 +23,7 @@ Build date: 2012-04-20 14:10:47 (19f55ab932145a3443b228045fa80950dfeaf9cc)
  * Will load ext-all.js (minified) otherwise
  */
 (function() {
+
     var scripts = document.getElementsByTagName('script'),
         localhostTests = [
             /^localhost$/,
@@ -72,6 +67,7 @@ Build date: 2012-04-20 14:10:47 (19f55ab932145a3443b228045fa80950dfeaf9cc)
         isDevelopment = true;
     }
 
-    document.write('<script type="text/javascript" charset="UTF-8" src="' + 
-        path + 'ext-all' + (isDevelopment ? '-dev' : '') + '.js"></script>');
+    document.write('<script type="text/javascript" src="' + path + 'ext-all' + ((isDevelopment) ? '-debug' : '') + '.js"></script>');
+
 })();
+

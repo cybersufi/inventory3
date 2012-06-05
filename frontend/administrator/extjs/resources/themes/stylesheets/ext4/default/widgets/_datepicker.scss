@@ -106,7 +106,9 @@
         }
         
         .#{$prefix}btn-split-right {
+            background: no-repeat right center !important;
             background-image: theme-background-image($theme-name, $datepicker-month-arrow-image);
+            
             padding-right: 12px;
         }
     }
@@ -291,7 +293,7 @@
         a {
             display: block;
             
-            margin: 0 5px;
+            margin: 0 5px 0 5px;
             
             text-decoration: none;
             

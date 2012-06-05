@@ -30,7 +30,6 @@
     .#{$prefix}slider-horz {
         padding-left:7px;
         background:transparent no-repeat 0 -24px;
-        width: 100%;
     }
 
     .#{$prefix}slider-horz .#{$prefix}slider-end {
@@ -45,13 +44,12 @@
     }
 
     .#{$prefix}slider-horz .#{$prefix}slider-thumb {
-        width: $horizontal-slider-thumb-width;
-        height: $horizontal-slider-thumb-height;
-        margin-left: -($horizontal-slider-thumb-width / 2);
-        position: absolute;
-        left: 0;
-        top: 1px;
-        background: transparent no-repeat 0 0;
+        width:14px;
+        height:15px;
+        position:absolute;
+        left:0;
+        top:1px;
+        background:transparent no-repeat 0 0;
     }
 
     .#{$prefix}slider-horz .#{$prefix}slider-thumb-over {
@@ -81,12 +79,11 @@
     }
 
     .#{$prefix}slider-vert .#{$prefix}slider-thumb {
-        width: $vertical-slider-thumb-width;
-        height: $vertical-slider-thumb-height;
-        margin-bottom: -($vertical-slider-thumb-height / 2);
-        position: absolute;
-        left: 3px;
-        bottom: 0;
+        width:15px;
+        height:14px;
+        position:absolute;
+        left:3px;
+        bottom:0;
         background:transparent no-repeat 0 0;
     }
 

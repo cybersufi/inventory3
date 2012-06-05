@@ -11,6 +11,7 @@ Administrator.application = null;
 Administrator.basePath = null;
 Administrator.resourcePath = null;
 Administrator.resourcePath = window.parameters.baseResource;
+Administrator.ExceptionWindow = null;
 Ext.application({
     name: "Administrator",
     require: [
@@ -20,6 +21,7 @@ Ext.application({
     launch: function () {
     	Ext.setLocale("en_US");
         Ext.get("loading").hide();
+        Administrator.ExceptionWindow = Ext.create('Administrator.Dialogs.ExceptionWindow');
         this.createLayout();
         Administrator.application = this;
         Administrator.setBasePath(window.parameters.basePath);

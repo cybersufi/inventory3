@@ -1,7 +1,7 @@
 /**
  * Represents an exception window.
  */
-Ext.define('PartKeepr.ExceptionWindow', {
+Ext.define('Administrator.Dialogs.ExceptionWindow', {
     extend: 'Ext.window.Window',
     resizable: true,
     layout: 'fit',
@@ -32,28 +32,28 @@ Ext.define('PartKeepr.ExceptionWindow', {
         });
     	
     	this.exceptionDetails = Ext.create('Ext.form.field.TextArea', {
-    		fieldLabel: i18n("Exception Details"),
+    		fieldLabel: "Exception Details",
     		flex: 1,
     		minHeight: 65,
     		readOnly: true
         });
     	
     	this.backtraceDetails = Ext.create('Ext.form.field.TextArea', {
-    		fieldLabel: i18n("Backtrace"),
+    		fieldLabel: "Backtrace",
     		flex: 1,
     		minHeight: 65,
     		readOnly: true
     	});
     	
     	this.requestDetails = Ext.create('Ext.form.field.TextArea', {
-    		fieldLabel: i18n("Request"),
+    		fieldLabel: "Request",
     		flex: 1,
     		minHeight: 65,
     		readOnly: true
         });
     	
     	this.responseDetails = Ext.create('Ext.form.field.TextArea', {
-    		fieldLabel: i18n("Response"),
+    		fieldLabel: "Response",
     		flex: 1,
     		minHeight: 65,
     		readOnly: true
@@ -63,7 +63,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     		style: 'padding: 10px',
     		layout: 'anchor',
     		anchor: '100% 100%',
-    		title: i18n("Basic"),
+    		title: "Basic",
     		items: [this.iconComponent, this.messageDiv, this.detailDiv ]
     	});
     	
@@ -71,7 +71,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     		style: 'padding: 10px',
     		layout: 'anchor',
     		autoScroll: true,
-    		title: i18n("Detail"),
+    		title: "Detail",
     		items: [{
     			xtype: 'panel',
     			height: 300,
@@ -94,7 +94,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     		style: 'padding: 10px',
     		layout: 'fit',
     		anchor: '100% 100%',
-    		title: i18n("Full Report"),
+    		title: "Full Report",
     		items: [ this.fullReport ]
     	});
     	
@@ -150,7 +150,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	var fullDetails = exception.message;
     	
     	if (exception.detail) {
-    		fullDetails += "\n\n"+i18n("Details")+"\n"+separator+"\n";
+    		fullDetails += "\n\n Details \n"+separator+"\n";
     		fullDetails += exception.detail;
     		
     		this.detailDiv.update(exception.detail);
@@ -160,7 +160,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	
     	
     	if (exception.exception) {
-    		fullDetails += "\n\n"+i18n("Exception")+"\n"+separator+"\n";
+    		fullDetails += "\n\n Exception \n"+separator+"\n";
     		fullDetails += exception.exception;
     		
     		this.exceptionDetails.setValue(exception.exception);
@@ -169,7 +169,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	}
     	
     	if (exception.backtrace) {
-    		fullDetails += "\n\n"+i18n("Backtrace")+"\n"+separator+"\n";
+    		fullDetails += "\n\n Backtrace \n"+separator+"\n";
     		fullDetails += exception.exception;
     		
     		this.backtraceDetails.setValue(nl2br(exception.backtrace));
@@ -178,7 +178,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	}
     	
     	if (requestData.request) {
-    		fullDetails += "\n\n"+i18n("Request")+"\n"+separator+"\n";
+    		fullDetails += "\n\n Request \n"+separator+"\n";
     		fullDetails += requestData.request;
     		
     		this.requestDetails.setValue(nl2br(requestData.request));
@@ -187,7 +187,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	}
     	
     	if (requestData.response) {
-    		fullDetails += "\n\n"+i18n("Response")+"\n"+separator+"\n";
+    		fullDetails += "\n\n Response \n"+separator+"\n";
     		fullDetails += requestData.response;
     		
     		this.responseDetails.setValue(nl2br(requestData.response));
@@ -195,7 +195,7 @@ Ext.define('PartKeepr.ExceptionWindow', {
     		this.responseDetails.setValue("No server response information available");
     	}
     	
-    	fullDetails += "\n\n"+i18n("Server Configuration")+"\n"+separator+"\n";
+    	fullDetails += "\n\n Server Configuration \n"+separator+"\n";
     	
     	for (var j in window.parameters) {
     		fullDetails += j+": " + window.parameters[j]+"\n"; 
@@ -207,6 +207,15 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	this.topContainer.layout.setActiveItem(0);
     	this.doLayout();
     },
+    
+    showException: function (exception, requestData) {
+		//if (!Administrator.ExceptionWindow) {
+    		//PartKeepr.ExceptionWindow.activeInstance = new PartKeepr.ExceptionWindow();
+    		//Administrator.ExceptionWindow = Ext.create('Administrator.Dialog.ExceptionWindow');
+    	//}
+		
+		Administrator.ExceptionWindow._showException(exception, requestData);
+	}
     
     statics: {
     	/**
@@ -228,11 +237,12 @@ Ext.define('PartKeepr.ExceptionWindow', {
     	 * @param requestData	The request data
     	 */
     	showException: function (exception, requestData) {
-    		if (!PartKeepr.ExceptionWindow.activeInstance) {
-        		PartKeepr.ExceptionWindow.activeInstance = new PartKeepr.ExceptionWindow();
+    		if (!Administrator.ExceptionWindow) {
+        		//PartKeepr.ExceptionWindow.activeInstance = new PartKeepr.ExceptionWindow();
+        		Administrator.ExceptionWindow = Ext.create('Administrator.Dialog.ExceptionWindow');
         	}
     		
-    		PartKeepr.ExceptionWindow.activeInstance._showException(exception, requestData);
+    		Administrator.ExceptionWindow._showException(exception, requestData);
     	}
     	
     }

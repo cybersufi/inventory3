@@ -152,9 +152,7 @@ Ext.define('Administrator.Util.ServiceCall', {
         			request: Ext.encode(options)
         	};
         	
-        	PartKeepr.ExceptionWindow.showException(exception, request);
-        	
-        	
+        	Administrator.ExceptionWindow.showException(exception, request);
         }
         
 		Administrator.getApplication().getStatusbar().endLoad();

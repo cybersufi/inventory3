@@ -1,6 +1,3 @@
-/**
- * Represents an exception window.
- */
 Ext.define('Administrator.Dialogs.ExceptionWindow', {
     extend: 'Ext.window.Window',
     resizable: true,
@@ -215,7 +212,7 @@ Ext.define('Administrator.Dialogs.ExceptionWindow', {
     	//}
 		
 		Administrator.ExceptionWindow._showException(exception, requestData);
-	}
+	},
     
     statics: {
     	/**

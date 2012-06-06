@@ -8,72 +8,72 @@ Ext.define('Administrator.Components.MenuBar', {
 		this.editMenu = Ext.create('Ext.menu.Menu', {
 			items: [{
 						text: 'Projects',
-						icon: 'resources/fugue-icons/icons/drill.png',
+						icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/drill.png',
 						handler: this.editProjects
 					},
 			        {
 			        	text: 'Footprints',
-			        	icon: 'resources/fugue-icons/icons/fingerprint.png',
+			        	icon: 'resoAdministrator.getResourcePath() + urces/fugue-icons/icons/fingerprint.png',
 			        	handler: this.editFootprints
 			        },{
 			        	text: 'Manufacturers',
-			        	icon: 'resources/silkicons/building.png',
+			        	icon: Administrator.getResourcePath() + 'resources/silkicons/building.png',
 			        	handler: this.editManufacturers
 			        },{
 			        	text: 'Storage Locations',
-			        	icon: 'resources/fugue-icons/icons/wooden-box.png',
+			        	icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/wooden-box.png',
 			        	handler: this.editStorageLocations
 			        },{
 			        	text: 'Distributors',
-			        	icon: 'resources/silkicons/lorry.png',
+			        	icon: Administrator.getResourcePath() + 'resources/silkicons/lorry.png',
 			        	handler: this.editDistributors
 			        },{
 			        	text: 'Users',
 			        	id: 'edit-users',
 			        	handler: this.editUsers,
-			        	icon: "resources/silkicons/user.png"
+			        	icon: Administrator.getResourcePath() + "resources/silkicons/user.png"
 			        },{
 			        	text: 'Part Measure Units',
 			        	handler: this.editPartUnits,
-			        	icon: "resources/fugue-icons/icons/ruler.png"
+			        	icon: Administrator.getResourcePath() + "resources/fugue-icons/icons/ruler.png"
 			        },{
 			        	text: "Units",
 			        	handler: this.editUnits,
-			        	icon: 'resources/icons/unit.png'
+			        	icon: Administrator.getResourcePath() + 'resources/icons/unit.png'
 			        }]
 		});
 		
 		this.viewMenu = Ext.create('Ext.menu.Menu', {
 			items: [{
 			        	text: "Statistics",
-			        	icon: 'resources/silkicons/chart_bar.png',
+			        	icon: Administrator.getResourcePath() + 'resources/silkicons/chart_bar.png',
 			        	menu: [
 							{
 								text: "Summary",
 								handler: this.showStatisticsSummary,
-								icon: 'resources/silkicons/chart_bar.png'
+								icon: Administrator.getResourcePath() + 'resources/silkicons/chart_bar.png'
 							},{
 								text: "Chart",
 								handler: this.showStatisticsChart,
-								icon: 'resources/silkicons/chart_bar.png'
+								icon: Administrator.getResourcePath() + 'resources/silkicons/chart_bar.png'
 							}]
 			        },
 					{
 						text: "System Information",
 						handler: this.showSystemInformation,
-						icon: 'resources/fugue-icons/icons/system-monitor.png'
+						icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/system-monitor.png'
 					},{
 						text: "Project Reports",
 						handler: this.showProjectReports,
-						icon: 'resources/fugue-icons/icons/drill.png'
+						icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/drill.png'
 					},{
 						text: "System Notices",
 						handler: this.showSystemNotices,
-						icon: 'resources/fugue-icons/icons/service-bell.png'
+						icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/service-bell.png'
 					},{
 						text: "Stock History",
 						handler: this.showStockHistory,
-						icon: 'resources/fugue-icons/icons/notebook.png'
+						icon: Administrator.getResourcePath() + 'resources/fugue-icons/icons/notebook.png'
 					}
 					
 			        ]

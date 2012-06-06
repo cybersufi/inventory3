@@ -19,9 +19,9 @@ Ext.application({
     ],
     appFolder: "frontend/administrator/js/App",
     launch: function () {
+    	Administrator.ExceptionWindow = Ext.create('Administrator.Dialogs.ExceptionWindow');
     	Ext.setLocale("en_US");
         Ext.get("loading").hide();
-        Administrator.ExceptionWindow = Ext.create('Administrator.Dialogs.ExceptionWindow');
         this.createLayout();
         Administrator.application = this;
         Administrator.setBasePath(window.parameters.basePath);
@@ -45,7 +45,7 @@ Ext.application({
     onLogin: function () {
         this.createGlobalStores();
         this.reloadStores();
-        var a = Ext.create("Administrator.Dashboard", {
+        var a = Ext.create("Administrator.Dashboard.DashboardPanel", {
             title: "Dashboard",
             iconCls: "icon-brick",
             closable: false

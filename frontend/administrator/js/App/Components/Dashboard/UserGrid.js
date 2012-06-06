@@ -4,7 +4,7 @@
  */
 Ext.define('Administrator.Dashboard.PartsGrid', {
 	extend: 'Administrator.Components.Grid.BaseGrid',
-	alias: 'widget.PartsGrid',
+	alias: 'widget.UserGrid',
 	
 	// We want to display the texts for the add/delete buttons
 	buttonTextMode: 'show',

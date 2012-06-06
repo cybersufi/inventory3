@@ -16,7 +16,7 @@ Ext.define('Administrator.Dashboard.DashboardPanel', {
 		/**
 		 * Create the store with the default sorter "name ASC"
 		 */
-		this.createStore({
+		/*this.createStore({
 			 model: 'PartKeepr.Part',
 			 proxy: PartKeepr.getRESTProxy("Part"),
 			 groupField: 'categoryPath',
@@ -24,10 +24,10 @@ Ext.define('Administrator.Dashboard.DashboardPanel', {
 				 property: 'name',
 				 direction:'ASC'
 			 }] 
-		 });
+		 });*/
 		
 		// Create the tree
-		this.tree = Ext.create("PartKeepr.PartCategoryTree", {
+		/*this.tree = Ext.create("PartKeepr.PartCategoryTree", {
 			region: 'west',
 			categoryModel: 'PartKeepr.PartCategory',
 			categoryService: 'PartCategory',
@@ -36,7 +36,7 @@ Ext.define('Administrator.Dashboard.DashboardPanel', {
 			ddGroup: 'CategoryTree',
 			width: 300,			// @todo Make this configurable
 			collapsible: true	// We want to collapse the tree panel on small screens
-		});
+		});*/
 		
 		// Trigger a grid reload on category change
 		this.tree.on("selectionchange", Ext.bind(function (t,s) {

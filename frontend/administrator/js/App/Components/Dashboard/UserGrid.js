@@ -8,26 +8,39 @@ Ext.define('Administrator.Dashboard.PartsGrid', {
 	
 	// We want to display the texts for the add/delete buttons
 	buttonTextMode: 'show',
-	
-	//refreshButtonText: "Refresh Data",
-	//addButtonIcon: Administrator.getResourcePath() + 'resources/silkicons/brick_add.png',
-    
-    //expandRowButtonIcon: Administrator.getResourcePath() + 'resources/icons/group-expand.png',
-    //collapseRowButtonIcon: Administrator.getResourcePath() + 'resources/icons/group-collapse.png',
-    
-	/*viewConfig: {
-        plugins: {
-            ddGroup: 'CategoryTree',
-            ptype: 'gridviewdragdrop',
-            enableDrop: false
-        }
-    },
-    enableDragDrop   : true,
-    multiSelect		 : true,*/
-	stripeRows       : true,
+	enableTopToolbar: true,
+	stripeRows: true,
     autoScroll: false,
     invalidateScrollerOnRefresh: true,
 	initComponent: function () {
+		
+		this.addEvents(
+				/**
+	             * @event itemSelect
+	             * Fires if a record was selected within the grid.
+	             * @param {Object} record The selected record
+	             */
+				"itemSelect",
+				
+				/**
+	             * @event itemDeselect
+	             * Fires if a record was deselected within the grid.
+	             * @param {Object} record The deselected record
+	             */
+				"itemDeselect",
+				
+				/**
+	             * @event gridRefresh
+	             * Fires if a refresh button pressed.
+	             */
+				"gridRefresh");
+		
+		this.getSelectionModel().on("select", 	this._onItemSelect, 	this);
+		this.getSelectionModel().on("deselect", this._onItemDeselect, 	this);
+		
+		this.searchField = Ext.create("Ext.ux.form.SearchField",{
+			store: this.store
+		});
 		
 		this.groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
 			//enableGroupingMenu: false,
@@ -40,27 +53,41 @@ Ext.define('Administrator.Dashboard.PartsGrid', {
 		
 		this.features = [this.groupingFeature];
 		
-		//this.on("itemdblclick", this.onDoubleClick, this);
-		
-		//this.addEvents("editPart");
-		
 		// Bugfix for scroller becoming detached.
 		// @todo Remove with ExtJS 4.1
 		this.on('scrollershow', function(scroller) {
-			  if (scroller && scroller.scrollEl) {
-			    scroller.clearManagedListeners(); 
-			    scroller.mon(scroller.scrollEl, 'scroll', scroller.onElScroll, scroller); 
-			  }
-			});
+  			if (scroller && scroller.scrollEl) {
+		    	scroller.clearManagedListeners(); 
+		    	scroller.mon(scroller.scrollEl, 'scroll', scroller.onElScroll, scroller); 
+		  	}
+		});
 		
-		//this.editing = Ext.create('Ext.grid.plugin.CellEditing', {
-            //clicksToEdit: 1
-        //});
+		this.refreshButton = Ext.create("Ext.button.Button", {
+			disabled: false,
+			handler: Ext.bind(function () {
+        		this.fireEvent("gridRefresh");
+        	}, this),
+			tooltip: "Refresh grid data",
+			text: "Refresh Data",
+			icon: Administrator.getResourcePath() + 'resources/silkicons/brick_link.png'
+		});
 		
-		//this.editing.on("edit", this.onEdit, this);
+		this.topToolbar = Ext.create("Ext.toolbar.Toolbar",{
+			dock: 'top',
+			enableOverflow: true,
+			items: [
+				this.refreshButton,
+				{ xtype: 'tbfill' },
+				this.searchField
+			]
+		});
 		
-		// Initialize the panel
-		this.callParent();
+		this.bottomToolbar = Ext.create("Ext.toolbar.Paging", {
+			store: this.store,
+			enableOverflow: true,
+			dock: 'bottom',
+			displayInfo: false
+		});
 		
 		this.bottomToolbar.add({
 			xtype: 'button',
@@ -83,130 +110,65 @@ Ext.define('Administrator.Dashboard.PartsGrid', {
 			}
 		});
 		
-
-		/*this.addFromTemplateButton = Ext.create("Ext.button.Button", {
-			disabled: true,
-			handler: Ext.bind(function () {
-        		this.fireEvent("itemCreateFromTemplate");
-        	}, this),
-			tooltip: i18n("Add a new part, using the selected part as template"),
-			text: i18n("Create from Template"),
-			icon: 'resources/silkicons/brick_link.png'
-		});
+		this.dockedItems = new Array();
 		
-		this.topToolbar.insert(2, this.addFromTemplateButton);*/
-		
-		this.refreshButton = Ext.create("Ext.button.Button", {
-			disabled: false,
-			handler: Ext.bind(function () {
-        		this.fireEvent("gridRefresh");
-        	}, this),
-			tooltip: "Refresh grid data",
-			text: "Refresh Data",
-			icon: Administrator.getResourcePath() + 'resources/silkicons/brick_link.png'
-		});
-		this.topToolbar.insert(0, this.refreshButton);
-	},
-	/**
-	 * Called when an item was selected. Enables/disables the delete button. 
-	 */
-	_updateAddTemplateButton: function (selectionModel, record) {
-		/* Right now, we support delete on a single record only */
-		if (this.getSelectionModel().getCount() == 1) {
-			this.addFromTemplateButton.enable();
-		} else {
-			this.addFromTemplateButton.disable();
+		this.dockedItems.push(this.bottomToolbar);
+	
+		if (this.enableTopToolbar) {
+			this.dockedItems.push(this.topToolbar);	
 		}
+		
+		// Initialize the panel
+		this.callParent();
 	},
 	/**
 	 * Called when an item was selected
 	 */
 	_onItemSelect: function (selectionModel, record) {
-		//this._updateAddTemplateButton(selectionModel, record);
-		this.callParent(arguments);
+		this.fireEvent("itemSelect", record);
 	},
 	/**
 	 * Called when an item was deselected
 	 */
 	_onItemDeselect: function (selectionModel, record) {
-		//this._updateAddTemplateButton(selectionModel, record);
-		this.callParent(arguments);
+		this.fireEvent("itemDeselect", record);
 	},
-	/**
-	 * Called when the record was double-clicked
-	 */
-	/*onDoubleClick: function (view, record) {
-		if (record) {
-			this.fireEvent("editPart", record.get("id"));
-		}
-	},*/
 	/**
 	 * Defines the columns used in this grid.
 	 */
 	defineColumns: function () {
-		this.columns = [
-		          {
-		        	  header: "",
-		        	  dataIndex: "",
-		        	  width: 30,
-		        	  renderer: this.iconRenderer
-		          },
-		          {
-		        	  header: "Username",
-		        	  dataIndex: 'username',
-		        	  flex: 1,
-		        	  minWidth: 200,
-		        	  renderer: Ext.util.Format.htmlEncode
-		          },{
-		        	  header: i18n("Storage Location"),
-		        	  dataIndex: 'storageLocationName'
-		          },{
-		        	  header: i18n("Status"),
-		        	  dataIndex: "status"
-		          },{
-		        	  header: i18n("Stock"),
-		        	  dataIndex: 'stockLevel',
-		        	  editor: {
-	                      xtype:'numberfield',
-	                      allowBlank:false
-	                  },
-		        	  renderer: this.stockLevelRenderer
-		          },{
-		        	  header: i18n("Min. Stock"),
-		        	  dataIndex: 'minStockLevel',
-		        	  renderer: this.stockLevelRenderer
-		          },{
-		        	  header: i18n("Avg. Price"),
-		        	  dataIndex: 'averagePrice'
-		          },{
-		        	  header: i18n("Footprint"),
-		        	  dataIndex: 'footprintName'
-		          },{
-		        	  header: i18n("Category"),
-		        	  dataIndex: 'categoryPath',
-		        	  hidden: true
-		          },{
-		        	  header: i18n("Create Date"),
-		        	  dataIndex: 'createDate',
-		        	  hidden: true
-		          }
-		          
-		          ];
+		this.columns = [{
+			header: "",
+	  		dataIndex: "",
+		  	width: 30,
+		  	renderer: this.iconRenderer
+		},{
+		  	header: "User ID",
+	  		dataIndex: 'userid',
+		  	flex: 1,
+		  	minWidth: 50,
+		  	renderer: Ext.util.Format.htmlEncode
+	  	},{
+		  	header: "User Name",
+	  		dataIndex: 'username',
+		  	flex: 1,
+		  	minWidth: 200,
+		  	renderer: Ext.util.Format.htmlEncode
+		},{
+		  	header: "User Group",
+	  		dataIndex: 'usergroup',
+		  	flex: 1,
+		  	minWidth: 200,
+		  	renderer: Ext.util.Format.htmlEncode
+		},{
+		  	header: "Total",
+	  		dataIndex: 'total',
+		  	flex: 1,
+		  	minWidth: 75,
+		  	renderer: Ext.util.Format.htmlEncode
+		}];
 	},
-	/**
-	 * Used as renderer for the stock level columns.
-	 * 
-	 * If a part contains a non-default unit, we display it.
-	 * Otherwise we hide it.
-	 */
-	stockLevelRenderer: function (val,q,rec)
-	{
-		if (rec.get("partUnitDefault") !== true) {
-			return val + " " + rec.get("partUnitName");
-		} else {
-			return val;
-		}
-	},
+	
 	/**
 	 * Used as renderer for the icon column.
 	 */
@@ -233,145 +195,9 @@ Ext.define('Administrator.Dashboard.PartsGrid', {
 		this.store.currentPage = 1;
 		this.store.load({ start: 0});
 	},
-	/**
-	 * Handles editing of the grid fields. Right now, only the stock level editing is supported.
-	 * 
-	 * @param e An edit event, as documented in
-	 * 		    http://docs.sencha.com/ext-js/4-0/#!/api/Ext.grid.plugin.CellEditing-event-edit
-	 */
-	onEdit: function (editor, e) {
-		switch (e.field) {
-			case "stockLevel": this.handleStockFieldEdit(e); break;
-			default: break;
-		}
+	
+	reloadGrid: function () {
+		// Simply reload the store for now
+		this.store.load();
 	},
-	/**
-	 * Handles the editing of the stock level field. Checks if the user has opted in to skip the
-	 * online stock edit confirm window, and runs the changes afterwards.
-	 * 
-	 * @param e An edit event, as documented in
-	 * 		    http://docs.sencha.com/ext-js/4-0/#!/api/Ext.grid.plugin.CellEditing-event-edit
-	 */
-	handleStockFieldEdit: function (e) {
-		if (PartKeepr.getApplication().getUserPreference("partkeepr.inline-stock-change.confirm") === false) {
-			this.handleStockChange(e);
-		} else {
-			this.confirmStockChange(e);
-		}
-	},
-	/**
-	 * Opens the confirm dialog
-	 * 
-	 * @param e An edit event, as documented in
-	 * 		    http://docs.sencha.com/ext-js/4-0/#!/api/Ext.grid.plugin.CellEditing-event-edit
-	 */
-	confirmStockChange: function (e) {
-		var confirmText = "";
-		var headerText = "";
-		
-		if (e.value < 0) {
-			confirmText = sprintf(	i18n("You wish to remove <b>%s %s</b> of the part <b>%s</b>. Is this correct?"),
-									abs(e.value), e.record.get("partUnitName"), e.record.get("name"));
-			
-			// Set the stock level to a temporary calculated value. 
-			e.record.set("stockLevel", (e.originalValue - abs(e.value)));
-			headerText = i18n("Remove Part(s)");
-		} else {
-			confirmText = sprintf(
-							i18n("You wish to set the stock level to <b>%s %s</b> of part <b>%s</b>. Is this correct?"),
-							abs(e.value), e.record.get("partUnitName"), e.record.get("name"));
-			
-			headerText = i18n("Set Stock Level for Part(s)");
-		}
-		
-		var j = new PartKeepr.RememberChoiceMessageBox({
-			escButtonAction: "cancel",
-			dontAskAgainProperty: "partkeepr.inlinestockremoval.ask",
-			dontAskAgainValue: false
-		});
-		
-		j.show({
-                title : headerText,
-                msg : confirmText,
-                buttons: Ext.Msg.OKCANCEL,
-                fn: this.afterConfirmStockChange,
-                scope : this,
-                originalOnEdit: e,
-                dialog: j
-            });
-	},
-	/**
-	 * Callback for the stock removal confirm window. 
-	 *
-	 * The parameters are documented on:
-	 * http://docs.sencha.com/ext-js/4-0/#!/api/Ext.window.MessageBox-method-show 
-	 */
-	afterConfirmStockChange: function (buttonId, text, opts) {
-		if (buttonId == "cancel") {
-			opts.originalOnEdit.record.set("stockLevel", opts.originalOnEdit.originalValue);
-		}
-		
-		if (buttonId == "ok") {
-			if (opts.dialog.rememberChoiceCheckbox.getValue() === true) {
-				PartKeepr.getApplication().setUserPreference("partkeepr.inline-stock-change.confirm", false);
-			}
-			
-			this.handleStockChange(opts.originalOnEdit);
-		}
-	},
-	/**
-	 * Handles the stock change. Automatically figures out which method to call (deleteStock or addStock) and
-	 * sets the correct quantity.
-	 * 
-	 * @param e An edit event, as documented in
-	 * 		    http://docs.sencha.com/ext-js/4-0/#!/api/Ext.grid.plugin.CellEditing-event-edit
-	 */
-	handleStockChange: function (e) {
-		var mode, quantity = 0;
-		
-		if (e.value < 0) {
-			mode = "deleteStock";
-			quantity = abs(e.value);
-		} else {
-			if (e.originalValue <= e.value) {
-				mode = "deleteStock";
-				quantity = e.originalValue - e.value;
-			} else {
-				mode = "addStock";
-				quantity = e.value - e.originalValue;
-			}
-		}
-		
-		var call = new PartKeepr.ServiceCall(
-    			"Part", 
-    			mode);
-		call.setParameter("stock", quantity);
-		call.setParameter("part", e.record.get("id"));
-    	call.setHandler(Ext.bind(this.reloadPart, this, [ e ]));
-    	call.doCall();
-	},
-	/**
-	 * Reloads the current part
-	 */
-	reloadPart: function (opts) {
-		this.loadPart(opts.record.get("id"), opts);
-	},
-	/**
-	 * Load the part from the database.
-	 */
-	loadPart: function (id, opts) {
-		PartKeepr.Part.load(id, {
-			scope: this,
-		    success: this.onPartLoaded
-		});
-	},
-	/**
-	 * Callback after the part is loaded
-	 */
-	onPartLoaded: function (record, opts) {
-		var rec = this.store.findRecord("id", record.get("id"));
-		if (rec) {
-			rec.set("stockLevel", record.get("stockLevel"));
-		}
-	}
 });

@@ -61,7 +61,8 @@ Ext.define("Administrator.Components.Session.SessionManager", {
 		//var k = new Administrator.Util.ServiceCall("Auth", "login");
 		var k = Ext.create('Administrator.Util.ServiceCall', 'Auth', 'login');
 		k.setParameter("username", username);
-		k.setParameter("password", md5(password));
+		//k.setParameter("password", md5(password));
+		k.setParameter("password", this.encrypt(password));
 		
 		k.enableAnonymous();
 		k.setHandler(Ext.bind(this.onAfterLogin, this));
@@ -95,5 +96,18 @@ Ext.define("Administrator.Components.Session.SessionManager", {
 	 */
 	getSession: function () {
 		return this.session;
-	}
+	},
+	/**
+	 * Returns encrypted password
+	 * 
+	 * @returns ecrypted password
+	 */
+	encrypt: function (a) {
+    	var str = a;
+    	for(i=0; i<5;i++) {
+			str=strrev(base64_encode(str));
+		}
+		str = str_replace('=','.',str);
+    	return str;
+    }
 });

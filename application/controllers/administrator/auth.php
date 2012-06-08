@@ -1,6 +1,6 @@
 <?php if ( ! defined('APPPATH')) exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class auth extends CI_Controller {
 	
 	private $sitename = "";
 	

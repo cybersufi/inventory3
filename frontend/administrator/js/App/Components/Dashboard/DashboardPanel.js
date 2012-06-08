@@ -39,7 +39,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 		});*/
 		
 		// Trigger a grid reload on category change
-		this.tree.on("selectionchange", Ext.bind(function (t,s) {
+		/*this.tree.on("selectionchange", Ext.bind(function (t,s) {
 			if (s.length > 0) {
 				this.grid.setCategory(s[0].get("id"));
 			}
@@ -47,27 +47,27 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 		
 		// Create the detail panel
 		this.detail = Ext.create("PartKeepr.PartDisplay", { title: i18n("Part Details") });
-		this.detail.on("editPart", this.onEditPart, this);
+		this.detail.on("editPart", this.onEditPart, this);*/
 		
 		// Create the grid
-		this.grid = Ext.create("PartKeepr.PartsGrid", { title: i18n("Parts List"), region: 'center', layout: 'fit', store: this.getStore()});
-		this.grid.on("editPart", this.onEditPart, this);
+		this.grid = Ext.create("Administrator.Components.Dashboard.TopUserGrid", { title: "Dashboard", layout: 'fit'});
+		//this.grid.on("editPart", this.onEditPart, this);
 		
 		// Create the grid listeners
-		this.grid.on("itemSelect", this.onItemSelect, this);
+		/*this.grid.on("itemSelect", this.onItemSelect, this);
 		this.grid.on("itemDeselect", this.onItemSelect, this);
 		this.grid.on("itemAdd", this.onItemAdd, this);
 		this.grid.on("itemDelete", this.onItemDelete, this);
 		this.grid.on("itemCreateFromTemplate", this.onItemCreateFromTemplate, this);
-		this.tree.on("syncCategory", this.onSyncCategory, this);
+		this.tree.on("syncCategory", this.onSyncCategory, this);*/
 		
 		// Listen on the partChanged event, which is fired when the users edits the part
-		this.detail.on("partChanged", function () { this.grid.getStore().load(); }, this);
+		//this.detail.on("partChanged", function () { this.grid.getStore().load(); }, this);
 		
 		// Create the stock level panel
-		this.stockLevel = Ext.create("PartKeepr.PartStockHistory", { title: "Stock History"});
+		//this.stockLevel = Ext.create("PartKeepr.PartStockHistory", { title: "Stock History"});
 		
-		this.detailPanel = Ext.create("Ext.tab.Panel", {
+		/*this.detailPanel = Ext.create("Ext.tab.Panel", {
 			title: i18n("Part Details"),
 			collapsed: true,
 			collapsible: true,
@@ -93,7 +93,9 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 			border: false,
 			region: 'center',
 			items: [ this.grid, this.filterPanel ]
-		}, this.detailPanel ]; 
+		}, this.detailPanel ]; */
+		
+		this.items = [ this.grid ];
 		
 		
 		this.callParent();
@@ -103,7 +105,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	 * of the selected part for a short time. We can't select the category
 	 * as this would affect the parts grid.
 	 */
-	onSyncCategory: function () {
+	/*onSyncCategory: function () {
 		var r = this.grid.getSelectionModel().getLastSelected();
 		
 		var rootNode = this.tree.getRootNode();
@@ -123,7 +125,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
      * 
      * Prompts the user if he really wishes to delete the part. If yes, it calls deletePart.
      */
-	onItemDelete: function () {
+	/*onItemDelete: function () {
 		var r = this.grid.getSelectionModel().getLastSelected();
 		
 		Ext.Msg.confirm(i18n("Delete Part"), sprintf(i18n("Do you really wish to delete the part %s?"),r.get("name")), this.deletePart, this);
@@ -135,7 +137,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	 * @param none
 	 * @return nothing
 	 */
-	onItemCreateFromTemplate: function () {
+	/*onItemCreateFromTemplate: function () {
 		var r = this.grid.getSelectionModel().getLastSelected();
 		
 		this.loadPart(r.get("id"), Ext.bind(this.createPartDuplicate, this));
@@ -144,7 +146,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	 * Creates a part duplicate from the given record and opens the editor window.
 	 * @param rec The record to duplicate
 	 */
-	createPartDuplicate: function (rec) {
+	/*createPartDuplicate: function (rec) {
 		var copy = rec.copy();
 		Ext.data.Model.id(copy);
 		copy.set("id", null);
@@ -164,7 +166,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
      * @todo We use the current selection of the grid. If for some reason the selection changes during the user is prompted,
      * we delete the wrong part. Fix that to pass the selected item to the onItemDelete then to this function.
      */
-	deletePart: function (btn) {
+	/*deletePart: function (btn) {
 		var r = this.grid.getSelectionModel().getLastSelected();
 		
 		if (btn == "yes") {
@@ -183,7 +185,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	/**
      * Creates a new, empty part editor window
      */
-	onItemAdd: function () {
+	/*onItemAdd: function () {
 		var j = Ext.create("PartKeepr.PartEditorWindow", {
 			partMode: 'create'
 		});
@@ -208,13 +210,13 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	/**
      * Called when a part was edited. Refreshes the grid.
      */
-	onEditPart: function (id) {
+	/*onEditPart: function (id) {
 		this.loadPart(id, Ext.bind(this.onPartLoaded, this));
 	},
 	/**
      * Called when a part was loaded. Displays the part in the editor window.
      */
-	onPartLoaded: function (f,g) {
+	/*onPartLoaded: function (f,g) {
 		var j = Ext.create("PartKeepr.PartEditorWindow");
 		j.editor.on("partSaved", this.onPartSaved, this);
 		j.editor.editItem(f);
@@ -234,7 +236,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	/**
      * Called when a part was selected in the grid. Displays the details for this part.
      */
-	onItemSelect: function () {
+	/*onItemSelect: function () {
 		if (this.grid.getSelectionModel().getCount() > 1) {
 			this.detailPanel.collapse();
 			this.tree.syncButton.disable();
@@ -257,7 +259,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
      * @param {Integer} id The ID of the part to load
      * @param {Function} handler The callback to call when the part was loaded
      */
-	loadPart: function (id, handler) {
+	/*loadPart: function (id, handler) {
 		// @todo we have this method duplicated in PartEditor
 		var model = Ext.ModelManager.getModel("PartKeepr.Part");
 		
@@ -269,7 +271,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	/**
      * Creates the store 
      */
-	createStore: function (config) {
+	/*createStore: function (config) {
 		Ext.Object.merge(config, {
 				autoLoad: true,
 				autoSync: false, // Do not change. If true, new (empty) records would be immediately commited to the database.
@@ -294,7 +296,7 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	/**
      * Returns the store 
      */
-	getStore: function () {
+	/*getStore: function () {
 		return this.store;
 	}
 });

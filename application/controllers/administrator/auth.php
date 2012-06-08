@@ -61,7 +61,7 @@ class auth extends CI_Controller {
 	}
 	
 	public function doLogout() {
-		
+		$this->libauth->logout();
 	}
 	
 	private function decrypt($str) {

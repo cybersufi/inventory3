@@ -59,7 +59,7 @@ Ext.define("Administrator.Components.Session.SessionManager", {
 	onLogin: function (username, password) {
 		//Ext.require('Administrator.Util.ServiceCall');
 		//var k = new Administrator.Util.ServiceCall("Auth", "login");
-		var k = Ext.create('Administrator.Util.ServiceCall', 'Auth', 'login');
+		var k = Ext.create('Administrator.Util.ServiceCall', 'auth', 'login');
 		k.setParameter("username", username);
 		//k.setParameter("password", md5(password));
 		k.setParameter("password", this.encrypt(password));

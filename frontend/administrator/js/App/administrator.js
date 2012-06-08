@@ -43,17 +43,17 @@ Ext.application({
     },
     
     onLogin: function () {
-        this.createGlobalStores();
-        this.reloadStores();
-        var a = Ext.create("Administrator.Dashboard.DashboardPanel", {
+        //this.createGlobalStores();
+        //this.reloadStores();
+        var a = Ext.create("Administrator.Components.Dashboard.DashboardPanel", {
             title: "Dashboard",
             iconCls: "icon-brick",
             closable: false
         });
         this.addItem(a);
         this.menuBar.enable();
-        this.doSystemStatusCheck();
-        this.doUnacknowledgedNoticesCheck();
+        //this.doSystemStatusCheck();
+        //this.doUnacknowledgedNoticesCheck();
         this.setSession(this.getSessionManager().getSession());
         this.getStatusbar().getConnectionButton().setConnected()
     },

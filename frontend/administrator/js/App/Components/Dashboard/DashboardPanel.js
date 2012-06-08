@@ -4,7 +4,7 @@
  * 
  * The part manager encapsulates the category tree, the part display grid and the part detail view.
  */
-Ext.define('Administrator.Dashboard.DashboardPanel', {
+Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
 	extend: 'Ext.panel.Panel',
 	alias: 'widget.DashboardPanel',
 	layout: 'border',

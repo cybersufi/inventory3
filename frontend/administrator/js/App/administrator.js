@@ -27,14 +27,14 @@ Ext.application({
         Administrator.setBasePath(window.parameters.basePath);
         Administrator.setResourcePath(window.parameters.baseResource);
         this.sessionManager = Ext.create("Administrator.Components.Session.SessionManager");
-        if (window.parameters.auto_start_session) {
-            this.getSessionManager().setSession(window.parameters.auto_start_session);
-            this.getStatusbar().connectionButton.hide();
-            this.onLogin()
-        } else {
-            this.sessionManager.on("login", this.onLogin, this);
-            this.sessionManager.login();
-        }
+        //if (window.parameters.auto_start_session) {
+            //this.getSessionManager().setSession(window.parameters.auto_start_session);
+            //this.getStatusbar().connectionButton.hide();
+            this.onLogin();
+        //} else {
+            //this.sessionManager.on("login", this.onLogin, this);
+            //this.sessionManager.login();
+        //}
         Ext.fly(document.body).on("contextmenu", this.onContextMenu, this)
     },
     
@@ -305,6 +305,83 @@ Administrator.serializeRecords = function (b) {
     }
     return a
 };
+
+Administrator.getAjaxProxy = function (a) {
+    var b;
+    var c = {
+        batchActions: false,
+        url: Administrator.getBasePath() + "/" + a,
+        listeners: {
+            exception: function (h, e, d) {
+                try {
+                    var i = Ext.decode(e.responseText);
+                    b = {
+                        response: e.responseText
+                    };
+                    PartKeepr.ExceptionWindow.showException(i.exception, b)
+                } catch (g) {
+                    var f = {
+                        message: i18n("Critical Error"),
+                        detail: i18n("The server returned a response which we were not able to interpret.")
+                    };
+                    b = {
+                        response: e.responseText
+                    };
+                    PartKeepr.ExceptionWindow.showException(f, b)
+                }
+            }
+        },
+        reader: {
+            type: "json",
+            root: "response.data",
+            successProperty: "success",
+            messageProperty: "message",
+            totalProperty: "response.totalCount"
+        },
+    };
+    return new Ext.data.proxy.Ajax(c)
+};
+
+
+PartKeepr.getRESTProxy = function (a) {
+    var b;
+    var c = {
+        batchActions: false,
+        url: PartKeepr.getBasePath() + "/" + a,
+        listeners: {
+            exception: function (h, e, d) {
+                try {
+                    var i = Ext.decode(e.responseText);
+                    b = {
+                        response: e.responseText
+                    };
+                    PartKeepr.ExceptionWindow.showException(i.exception, b)
+                } catch (g) {
+                    var f = {
+                        message: i18n("Critical Error"),
+                        detail: i18n("The server returned a response which we were not able to interpret.")
+                    };
+                    b = {
+                        response: e.responseText
+                    };
+                    PartKeepr.ExceptionWindow.showException(f, b)
+                }
+            }
+        },
+        reader: {
+            type: "json",
+            root: "response.data",
+            successProperty: "success",
+            messageProperty: "message",
+            totalProperty: "response.totalCount"
+        },
+        writer: {
+            type: "jsonwithassociations"
+        }
+    };
+    return new Ext.data.proxy.Rest(c)
+};
+
 
 Ext.setLocale = function (a) {
     Ext.jm_locale = a

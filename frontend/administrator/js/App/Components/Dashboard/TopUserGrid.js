@@ -3,40 +3,13 @@
  * 
  */
 Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
-	extend: 'Administrator.Components.Grid.BaseGrid',
+	extend: 'Administrator.Components.Portal.GridPortlet',
 	alias: 'widget.TopUserGrid',
 	
-	// We want to display the texts for the add/delete buttons
-	buttonTextMode: 'show',
-	enableTopToolbar: true,
 	stripeRows: true,
     autoScroll: false,
     invalidateScrollerOnRefresh: true,
 	initComponent: function () {
-		
-		this.addEvents(
-				/**
-	             * @event itemSelect
-	             * Fires if a record was selected within the grid.
-	             * @param {Object} record The selected record
-	             */
-				"itemSelect",
-				
-				/**
-	             * @event itemDeselect
-	             * Fires if a record was deselected within the grid.
-	             * @param {Object} record The deselected record
-	             */
-				"itemDeselect",
-				
-				/**
-	             * @event gridRefresh
-	             * Fires if a refresh button pressed.
-	             */
-				"gridRefresh");
-		
-		this.getSelectionModel().on("select", 	this._onItemSelect, 	this);
-		this.getSelectionModel().on("deselect", this._onItemDeselect, 	this);
 		
 		this.searchField = Ext.create("Ext.ux.form.SearchField",{
 			store: this.store
@@ -49,7 +22,6 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 
 		// Create the columns
 		this.defineColumns();
-		
 		
 		this.features = [this.groupingFeature];
 		
@@ -121,28 +93,9 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 		// Initialize the panel
 		this.callParent();
 	},
-	/**
-	 * Called when an item was selected
-	 */
-	_onItemSelect: function (selectionModel, record) {
-		this.fireEvent("itemSelect", record);
-	},
-	/**
-	 * Called when an item was deselected
-	 */
-	_onItemDeselect: function (selectionModel, record) {
-		this.fireEvent("itemDeselect", record);
-	},
-	/**
-	 * Defines the columns used in this grid.
-	 */
+	
 	defineColumns: function () {
 		this.columns = [{
-			header: "",
-	  		dataIndex: "",
-		  	width: 30,
-		  	renderer: this.iconRenderer
-		},{
 		  	header: "User ID",
 	  		dataIndex: 'userid',
 		  	flex: 1,
@@ -167,33 +120,6 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 		  	minWidth: 75,
 		  	renderer: Ext.util.Format.htmlEncode
 		}];
-	},
-	
-	/**
-	 * Used as renderer for the icon column.
-	 */
-	iconRenderer: function (val,q,rec)
-	{
-		var ret = "";
-		if (rec.get("attachmentCount") > 0) {
-			ret += '<img src="resources/diagona-icons/icons/10/190.png" style="margin-top: 2px;" alt="'+i18n("Has attachments")+'" title="'+i18n("Has attachments")+'"/>';
-		}
-		
-		return ret;
-	},
-	/**
-	 * Sets the category. Triggers a store reload with a category filter.
-	 */
-	setCategory: function (category) {
-		this.currentCategory = category;
-		
-		var proxy = this.store.getProxy();
-		
-		proxy.extraParams.category = category;
-		this.searchField.onTrigger1Click();
-		
-		this.store.currentPage = 1;
-		this.store.load({ start: 0});
 	},
 	
 	reloadGrid: function () {

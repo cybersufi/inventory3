@@ -5,12 +5,27 @@
  * The part manager encapsulates the category tree, the part display grid and the part detail view.
  */
 Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
-	extend: 'Ext.panel.Panel',
+	extend: 'Administrator.Components.Portal.PortalPanel',
 	alias: 'widget.DashboardPanel',
 	layout: 'border',
 	id: 'administrator-dashboard',
 	border: false,
 	padding: 5,
+	
+	getTools: function(){
+        return [{
+            xtype: 'tool',
+            type: 'gear',
+            handler: function(e, target, panelHeader, tool){
+                var portlet = panelHeader.ownerCt;
+                portlet.setLoading('Loading...');
+                Ext.defer(function() {
+                    portlet.setLoading(false);
+                }, 2000);
+            }
+        }];
+    },
+	
 	initComponent: function () {
 		
 		/**
@@ -298,5 +313,5 @@ Ext.define('Administrator.Component.Dashboard.DashboardPanel', {
      */
 	/*getStore: function () {
 		return this.store;
-	}
+	}*/
 });

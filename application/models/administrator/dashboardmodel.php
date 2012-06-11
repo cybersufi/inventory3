@@ -17,22 +17,7 @@ class dashboardmodel extends CI_Model {
 		$this->user_history = 'users_history';
 	}
 	
-	public function __call($name, $arguments) {
-		switch ($name) {
-      		case 'getTopUser': 
-				if (count($arguments) == 0) {
-					return $this->_getTopUser();
-				} else {
-          			trigger_error("Method <strong>$name</strong> with argument ". implode (',', $arguments)."doesn't exist", E_USER_ERROR);
-        		}
-			break;
-			default:
-        			trigger_error("Method <strong>$name</strong> doesn't exist", E_USER_ERROR);
-			break;
-    	}
-	}
-	
-	private function _getTopUser() {
+	public function getTopUser() {
 		$uh = $this->user_history;
 		$gl = $this->group_tbl;
 		$ul = $this->user_tbl;
@@ -48,6 +33,38 @@ class dashboardmodel extends CI_Model {
     	return $var = ($sql->num_rows() > 0) ? $sql : false;
 	}
 	
+	public function getLoggedUser() {
+		$ul = $this->user_tbl;
+		$gl = $this->group_tbl;
+		$st = $this->session_tbl;
+
+    	$sql = $this->db->select($st.'.ip_address as ipaddress, '.
+							 $st.'.last_activity as lastactivity, '.
+							 $st.'.user_data as userdata')
+ 		->from($st)
+	 	->get();
+    	return $var = ($sql->num_rows() > 0) ? $sql : false;
+	}
+	
+	public function getUserById($id) {
+		$ul = $this->user_tbl;
+		$gl = $this->group_tbl;
+		$bl = $this->banned_tbl;
+
+		$sql = $this->db->select($ul.'.id as uid, '.
+								 $ul.'.username, '.
+								 $ul.'.email, '.
+								 $ul.'.activation_code, '.
+								 $gl.'.title as groupname, '.
+								 $bl.'.reason')
+ 		->from($ul)
+	 	->join($gl, $gl.'.id = '.$ul.'.group_id','left')
+	 	->join($bl, $bl.'.id = '.$ul.'.banned_id','left')
+      	->where($ul.'.id',$id)
+      	->limit(1,0)
+      	->get();
+		return $var = ($sql->num_rows() > 0) ? $sql : false;
+  	}
 }
 
 ?>

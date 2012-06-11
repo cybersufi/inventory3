@@ -162,7 +162,7 @@
 					throw new UserInactiveException();
 				}
 				else if(!empty($res->banned_id)) {
-					$this->ci->session->set_flashdata('login', 'Your Account has been banned for the following reason : '.$res->reason);
+					$this->ci->session->set_flashdata('login', 'Your Account _loginhas been banned for the following reason : '.$res->reason);
 					//return 'BANNED';
 					throw new UserBannedException($res->reason);
 				}
@@ -727,7 +727,8 @@
 		 * @return null
 		**/
 		protected function _set_user_history ($users_tbl, $history_tbl, $id) {
-			$ip = $_SERVER["REMOTE_ADDR"];
+			//$ip = $_SERVER["REMOTE_ADDR"];
+			$ip = $this->input->ip_address();
 			$date = date('U');
 			
 			$i = $this->ci->db->select($users_tbl.'.lastlogin, '.

@@ -72,7 +72,7 @@ class dashboard extends CI_Controller {
 							}
 						}
 						
-						$user = $this->dm->getUserById($userid, Usermodel::GET_DETAIL)->result();
+						$user = $this->dm->getUserById($userid)->result();
 						$curr_res['username'] = $user[0]->username;
 						$curr_res['usergroup'] = $user[0]->groupname;
 						$res[] = $curr_res;

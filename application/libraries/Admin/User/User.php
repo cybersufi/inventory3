@@ -88,8 +88,8 @@ class User implements Serializable {
 	    unset($array['_parent'], $array['_index']);
 	    array_walk_recursive($array, function(&$property, $key){
 	        if(is_object($property)
-	        && method_exists($property, 'toArray')){
-	            $property = $property->toArray();
+	        && method_exists($property, 'serialize')){
+	            $property = $property->serialize();
 	        }
 	    });
     	return $array;

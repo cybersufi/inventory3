@@ -1,6 +1,6 @@
 <?php if (!defined('APPPATH')) exit('No direct script access allowed');
 
-class User implements Serializable {
+class User{
 	
 	private $userid = "";
 	private $username = "";
@@ -10,6 +10,10 @@ class User implements Serializable {
 	private $userstatus = "";
 	private $lastlogin = "";
 	private $lastip = "";
+	private $loginCount = "";
+	private $currentIp = "";
+	private $bannedReason = "";
+	private $lastActive = "";
 	
 	public function getUserID() {
 		return $this->userid;
@@ -83,7 +87,47 @@ class User implements Serializable {
 		$this->lastip = $lastip;
 	}
 	
-	public function serialize () {
+	public function getLoginCount()
+	{
+		return $this->loginCount;
+	}
+	
+	public function setLoginCount($loginCount)
+	{
+		$this->loginCount = $loginCount;
+	}
+	
+	public function getCurrentIp()
+	{
+		return $this->currentIp;
+	}
+	
+	public function setCurrentIp($currentIp)
+	{
+		$this->currentIp = $currentIp;
+	}
+	
+	public function getBannedReason()
+	{
+		return $this->bannedReason;
+	}
+	
+	public function setBannedReason($reason)
+	{
+		$this->bannedReason = $reason;
+	}
+	
+	public function getLastActive()
+	{
+		return $this->lastActive;
+	}
+	
+	public function setLastActive($lastActive)
+	{
+		$this->lastActive = $lastActive;
+	}
+	
+	public function toArray () {
 		$array = get_object_vars($this);
 	    unset($array['_parent'], $array['_index']);
 	    array_walk_recursive($array, function(&$property, $key){

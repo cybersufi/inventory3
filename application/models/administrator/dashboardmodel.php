@@ -30,7 +30,22 @@ class dashboardmodel extends CI_Model {
 		->join($gl, $gl.'.id = '.$ul.'.group_id','left')
 		->group_by($uh.".userid")
 	 	->get();
-    	return $var = ($sql->num_rows() > 0) ? $sql : false;
+		
+    	if ($sql->num_rows() > 0) {
+			$coll = new UserCollection();
+			foreach ($sql->result() as $row) {
+				$user = new User();
+				$user->setUserID($row->userid);
+				$user->setUsername($row->username);
+				$user->setGroupname($row->usergroup);
+				$user->setLoginCount($row->total);
+				$coll->add($user);
+			}
+			return $coll;
+		} else {
+			return false;
+		}
+		
 	}
 	
 	public function getLoggedUser() {
@@ -43,7 +58,36 @@ class dashboardmodel extends CI_Model {
 							 $st.'.user_data as userdata')
  		->from($st)
 	 	->get();
-    	return $var = ($sql->num_rows() > 0) ? $sql : false;
+		
+		if ($sql->num_rows() > 0) {
+			$coll = new UserCollection();
+			foreach ($sql->result() as $row) {
+				$user = new User();
+				$userdata = $row->userdata;
+				if (!empty($userdata)) {
+					$userdata = substr($userdata, 5, -1);
+					$userdata = explode(";", $userdata);
+					for ($i = 0; $i < count($userdata); $i++) {
+						if (strstr($userdata[$i], "id")) {
+							$j = $i+1;
+							$tmp = explode(":", $userdata[$j]);
+							$userid = str_replace("\"", '', $tmp[2]);
+							break;
+						}
+					}
+					$user = $thos->getUserById($userid);
+					$user->setCurrentIp($row->ipaddress);
+					$user->setLastActive(date('d/m/Y H:i', $row->lastactivity));
+					$coll->add($user);
+				} else {
+					continue;
+				}
+				$coll->add($user);
+			}
+			return $coll;
+		} else {
+			return false;
+		}
 	}
 	
 	public function getUserById($id) {
@@ -63,7 +107,20 @@ class dashboardmodel extends CI_Model {
       	->where($ul.'.id',$id)
       	->limit(1,0)
       	->get();
-		return $var = ($sql->num_rows() > 0) ? $sql : false;
+		
+		if ($sql->num_rows() > 0) {
+			$user = new User();
+			$res = $sql->result();
+			$user->setUserId($res[0]->uid);
+			$user->setUsername($res[0]->username);
+			$user->setEmail($res[0]->email);
+			$user->setGroupname($res[0]->groupname);
+			$user->setBannedReason($res[0]->reason);
+			$user->setStatus($res[0]->activation_code);
+			return $user;
+		} else {
+			return false;
+		}
   	}
 }
 

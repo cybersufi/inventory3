@@ -8,7 +8,23 @@ class Main extends CI_Controller {
 		$this->load->library('Admin');
 		$user = new User();
 		$user->setUsername('baka');
-		print_r($user);
+		$arr = $user->toArray();
+		//print_r($arr);
+		//echo json_encode($arr);
+		
+		$user1 = new User();
+		$user1->setUsername('bon');
+		
+		$user2 = new User();
+		$user2->setUsername('bin');
+		
+		$col = new UserCollection();
+		$col->add($user);
+		$col->add($user1);
+		$col->add($user2);
+		//print_r($col->toArray());
+		echo json_encode($col->toArray());
+		
 	}
 }
 

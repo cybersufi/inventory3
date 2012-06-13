@@ -718,6 +718,24 @@
 		}
 		
 		/**
+		 * _get_user_history
+		 *
+		 * @access protected
+		 * @param string $user_table Users table
+		 * @param string $history_table History table
+		 * @param integer $id Users id
+		 * @return null
+		**/
+		protected function _get_user_history ($users_tbl, $history_tbl, $id) {
+			$i = $this->ci->db->select($users_tbl.'.lastlogin, '.
+								  	   $users_tbl.'.ipaddress')
+			->from($users_tbl)
+			->where($users_tbl.'.id', $id)
+			->limit(1)
+			->get();
+		}
+		
+		/**
 		 * _set_user_history
 		 *
 		 * @access protected

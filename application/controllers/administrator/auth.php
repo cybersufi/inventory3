@@ -60,7 +60,7 @@ class auth extends CI_Controller {
 		$this->load->view('administrator/result', $data);
 	}
 	
-	public function doLogout() {
+	public function logout() {
 		$this->libauth->logout();
 	}
 	

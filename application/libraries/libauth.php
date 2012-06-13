@@ -746,7 +746,7 @@
 		**/
 		protected function _set_user_history ($users_tbl, $history_tbl, $id) {
 			//$ip = $_SERVER["REMOTE_ADDR"];
-			$ip = $this->input->ip_address();
+			$ip = $this->ci->input->ip_address();
 			$date = date('U');
 			
 			$i = $this->ci->db->select($users_tbl.'.lastlogin, '.

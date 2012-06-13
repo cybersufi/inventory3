@@ -4,7 +4,11 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('administrator/main');
+		//$this->load->view('administrator/main');
+		$this->load->library('Admin');
+		$user = new User();
+		$user->setUsername('baka');
+		print_r($user);
 	}
 }
 

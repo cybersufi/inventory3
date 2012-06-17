@@ -66,7 +66,26 @@ class Usermodel extends CI_Model {
     
     	$res = $this->db->get();
     
-    	return ($res->num_rows() > 0) ? $res : false;
+    	//return ($res->num_rows() > 0) ? $res : false;
+		
+		if ($sql->num_rows() > 0) {
+			$coll = new UserCollection();
+			foreach ($sql->result() as $row) {
+				$user = new User();
+				$user->setUserID($row->uid);
+				$user->setUsername($row->username);
+				$user->setGroupname($row->groupname);
+				$user->setEmail($row->email);
+				$user->setLastLogin($row->lastlogin);
+				$user->setLastIp($row->ipaddress);
+				$user->setStatus($row->activation_code);
+				$user->setBannedReason($row->reason);
+				$coll->add($user);
+			}
+			return $coll;
+		} else {
+			return false;
+		}
   	}
 	
 	public function getUserCredential1($username) {

@@ -36,11 +36,12 @@ class user extends CI_Controller {
 			}
 	    
 		    if (empty($start) && empty($limit)) {
-		      	$sl = ($isFiltered) ? $this->um->getUserListFiltered($sort, $filters) : $this->um->getUserList($sort);
+		      	//$sl = ($isFiltered) ? $this->um->getUserListFiltered($sort, $filters) : $this->um->getUserList($sort);
+		      	$collection = ($isFiltered) ? $this->um->getUserList(0,0, $sort, $filters);
 		    } else if (empty($start)) {
-		      	$sl = ($isFiltered) ? $this->um->getUserListFiltered($limit, $sort, $filters) : $this->um->getUserList($limit, $sort);
+		      	//$sl = ($isFiltered) ? $this->um->getUserListFiltered($limit, $sort, $filters) : $this->um->getUserList($limit, $sort);
 		    } else {
-		      	$sl = ($isFiltered) ? $this->um->getUserListFiltered($start, $limit, $sort, $filters) : $this->um->getUserList($start, $limit, $sort);
+		      	//$sl = ($isFiltered) ? $this->um->getUserListFiltered($start, $limit, $sort, $filters) : $this->um->getUserList($start, $limit, $sort);
 		    }
 			
 	    	$data['type'] = 'list';

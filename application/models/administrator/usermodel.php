@@ -20,7 +20,7 @@ class Usermodel extends CI_Model {
 		$this->user_history = 'users_history';
 	}
 	
-	private function userCount($filters=null) {
+	public function userCount($filters=null) {
 		$ul = $this->user_tbl;
     	$gl = $this->group_tbl;
     
@@ -68,9 +68,9 @@ class Usermodel extends CI_Model {
     
     	//return ($res->num_rows() > 0) ? $res : false;
 		
-		if ($sql->num_rows() > 0) {
+		if ($res->num_rows() > 0) {
 			$coll = new UserCollection();
-			foreach ($sql->result() as $row) {
+			foreach ($res->result() as $row) {
 				$user = new User();
 				$user->setUserID($row->uid);
 				$user->setUsername($row->username);

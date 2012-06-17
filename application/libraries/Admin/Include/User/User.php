@@ -112,18 +112,15 @@ class User{
 		return $this->bannedReason;
 	}
 	
-	public function setBannedReason($reason)
-	{
+	public function setBannedReason($reason) {
 		$this->bannedReason = $reason;
 	}
 	
-	public function getLastActive()
-	{
+	public function getLastActive() {
 		return $this->lastActive;
 	}
 	
-	public function setLastActive($lastActive)
-	{
+	public function setLastActive($lastActive) {
 		$this->lastActive = $lastActive;
 	}
 	
@@ -140,6 +137,5 @@ class User{
 	}
 	
 }
-
 ?>
 	

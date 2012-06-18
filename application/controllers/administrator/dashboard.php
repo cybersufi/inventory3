@@ -3,9 +3,9 @@
 class dashboard extends CI_Controller {
 	
 	private $sitename = "";
-	
 	private $index;
 	private $result;
+	private $timming;
 	
 	public function __construct() {
 		parent::__construct();
@@ -14,6 +14,7 @@ class dashboard extends CI_Controller {
 		$this->load->library('admin');
 		$this->index = 'administrator/dashboard/index';
 		$this->result = 'administrator/dashboard/result';
+		$this->timming = microtime(true);
 	}
 	
 	public function index() {
@@ -21,7 +22,7 @@ class dashboard extends CI_Controller {
 	}
 	
 	public function topUser() {
-		$data['timingStart'] = microtime(true);
+		$data['timingStart'] = $this->timming;
 		//$issiteadmin = $this->session->userdata('issiteadmin');
 		//if ($issiteadmin) {
 			$this->load->model('administrator/dashboardmodel','dm');
@@ -36,8 +37,7 @@ class dashboard extends CI_Controller {
 	}
 	
 	public function loggedUser() {
-		$data['timingStart'] = microtime(true);
-		
+		$data['timingStart'] = $this->timming;
 		//$issiteadmin = $this->session->userdata('issiteadmin');
 		//if ($issiteadmin) {
 			$this->load->model('administrator/dashboardmodel','dm');
@@ -49,6 +49,10 @@ class dashboard extends CI_Controller {
 			$data['result'] = $res;
 		//}
     	$this->load->view($this->result, $data);
+		return null;
+	}
+	
+	public function hitData() {
 		return null;
 	}
 	

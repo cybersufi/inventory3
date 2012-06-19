@@ -18,7 +18,34 @@ class dashboard extends CI_Controller {
 	}
 	
 	public function index() {
-		$this->load->view('welcome_message');
+		$data['page_title'] = 'Dashboard Controller';
+		$data['function_list'] = array(
+			array(
+				'function_name' => 'topUser()',
+				'function_desc' => 'Function to get top user list',
+				'function_param' => array(),
+				'function_return' => array(
+					'object' => 'UserCollection', 
+					'desc' => 'return user list in form of UserCollection object otherwise null is no user return'
+				)
+			),
+			array(
+				'function_name' => 'loggedUser ()',
+				'function_desc' => 'Function to get currently logged user',
+				'function_param' => array(),
+				'function_return' => array(
+					'object' => 'UserCollection',
+					'desc' => 'return user list in form of UserCollection object otherwise null is no user return'
+				)
+			),
+			array(
+				'function_name' => 'topIP ()',
+				'function_desc' => 'Function to get top IP list',
+				'function_param' => array(),
+				'function_return' => array()
+			),
+		);
+		$this->load->view('default', $data);
 	}
 	
 	public function topUser() {

@@ -13,6 +13,7 @@ class usermanager extends CI_Controller {
 		$this->load->model('administratir/usermodel', 'um');
 		$this->index = 'administrator/user/index';
 		$this->result = 'administrator/user/result';
+		$this->timingStart = microtime(true);
 	}
 	
 	public function index() {
@@ -21,8 +22,7 @@ class usermanager extends CI_Controller {
 	}
 	
 	public function userList() {
-		$data['timingStart'] = microtime(true);
-		
+		$data['timingStart'] = $this->timingStart;
 		//$issiteadmin = $this->session->userdata('issiteadmin');
 		//if ($issiteadmin) {
 			$start = $this->input->get_post('start');
@@ -63,6 +63,7 @@ class usermanager extends CI_Controller {
 	}
 	
 	public function addUser() {
+		$data['timingStart'] = $this->timingStart;
 		$username = $this->input->post('username');
 		$res = $this->um->checkUserByName($username);
 		if ($res == false) {
@@ -84,27 +85,12 @@ class usermanager extends CI_Controller {
 				$data['status'] = 'ok';
 				$data['success'] = true;
 				$data['result'] = array();
+
 			} else {
 				$e = new UserAddFailedException();
 				$data['status'] = 'error';
 				$data['success'] = false;
 				$data['result'] = $e->serialize();
-			}
-			
-			switch($redux) {
-				case 'REGISTRATION_SUCCESS' :
-				case 'REGISTRATION_SUCCESS_EMAIL' :
-					$data['success'] = 'true';
-					$data['msg'] = 'User registered';
-				break;
-				case 'false' :
-					$data['success'] = 'false';
-					$data['msg'] = 'User Registration failed. Please try again';
-				break;
-				default :
-					$data['success'] = 'false';
-					$data['msg'] = 'Unknown Error. Please try again';
-				break;
 			}
 		} else {
 			$e = new UserAlreadyExistsException($username);
@@ -112,10 +98,52 @@ class usermanager extends CI_Controller {
 			$data['success'] = false;
 			$data['result'] = $e->serialize();
 		}
+		$this->load->view($this->result, $data);
+	}
 
-
-		/*$data['type'] = 'form';
-		$this->load->view($this->result, $data);*/
+	public function deleteUser() {
+		$config = array(
+			array (
+				'field'   => 'ids', 
+				'label'   => 'ids', 
+				'rules'   => 'required'
+			)
+		);
+				
+		$this->form_validation->set_rules($config);
+		
+		if ($this->form_validation->run()) {
+			$ids = $this->input->post('ids');
+			$ids = explode(";", $ids);
+			foreach ($ids as $id) {
+				$res = $this->um->deleteUserById($id);
+	  		}
+			
+			switch($redux) {
+				case 'UNREGISTER_SUCCESS' :
+					$data['success'] = 'true';
+					$data['msg'] = 'User deleted';
+				break;
+				case 'UNREGISTER_FAILED' :
+					$data['success'] = 'false';
+					$data['msg'] = 'Failed to delete user';
+				break;
+				case 'false' :
+					$data['success'] = 'false';
+					$data['msg'] = 'Unknown Error. Please try again';
+				break;
+				default :
+					$data['success'] = 'false';
+					$data['msg'] = 'Unknown Error. Please try again';
+				break;
+			}
+		} else {
+			$e = new InvalidDataException();
+			$data['status'] = 'error';
+			$data['success'] = false;
+			$data['result'] = $e->serialize();
+		}
+		$this->load->view($this->result, $data);
 	}
 
 	private function sortParser($sorter) {

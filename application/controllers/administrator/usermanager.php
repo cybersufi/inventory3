@@ -59,6 +59,79 @@ class usermanager extends CI_Controller {
     	$this->load->view($this->result, $data);
 	}
 	
+	public function addUser() {
+		$res = $this->redux_auth->check_username($this->input->post('username'));
+		if ($res == false) {
+			$gid = $this->session->userdata('gid');
+			if ($gid == 0) {
+				
+				$config = array(
+					array(
+						'field'   => 'username', 
+						'label'   => 'Username', 
+						'rules'   => 'required'
+					), array(
+						'field'   => 'password', 
+						'label'   => 'Password', 
+						'rules'   => 'required'
+					),  array(
+						'field'   => 'password2', 
+						'label'   => 'Repeat Password', 
+						'rules'   => 'required'
+					), array(
+						'field'   => 'question', 
+						'label'   => 'Secret Question', 
+						'rules'   => 'required'
+					), array(
+						'field'   => 'answer', 
+						'label'   => 'Secret Answer', 
+						'rules'   => 'required'
+					),
+				);
+						
+				$this->form_validation->set_rules($config);
+				
+				if ($this->form_validation->run()) {
+					$redux = $this->redux_auth->register (
+						$this->input->post('username'),
+						$this->input->post('password'),
+						$this->input->post('email'),
+						$this->input->post('question'),
+						$this->input->post('answer')
+					);
+					
+					switch($redux) {
+						case 'REGISTRATION_SUCCESS' :
+						case 'REGISTRATION_SUCCESS_EMAIL' :
+							$data['success'] = 'true';
+							$data['msg'] = 'User registered';
+						break;
+						case 'false' :
+							$data['success'] = 'false';
+							$data['msg'] = 'User Registration failed. Please try again';
+						break;
+						default :
+							$data['success'] = 'false';
+							$data['msg'] = 'Unknown Error. Please try again';
+						break;
+					}
+				} else {
+					$data['success'] = 'false';
+					$data['msg'] = 'Invalid Data. Please try again';
+				}
+			} else {
+				$data['success'] = 'false';
+				$data['msg'] = 'You have no privilege to add user.';
+			}
+		} else {
+			$data['success'] = 'false';
+			$data['msg'] = 'Username already used.';
+		}
+		$data['type'] = 'form';
+		$this->load->view($this->result, $data);
+		return null;
+	}
+
 	private function sortParser($sorter) {
 		$sorter = json_decode($sorter);
 		$sort = NULL;

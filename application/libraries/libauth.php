@@ -1,22 +1,7 @@
 <?php  if (!defined('APPPATH')) exit('No direct script access allowed');
 
-	/**
-	 * redux_auth
-	 *
-	 * @author Mathew Davies <leveldesign.info@gmail.com>
-	 * @copyright Copyright (c) 1 June 2008, Mathew Davies
-	 * @license http://www.opensource.org/licenses/mit-license.php The MIT License
-	 * @version 1.4
-	 * @since 1.0
-	**/
 	class libauth extends auth_db {
-		/**
-		 * __construct
-		 *
-		 * @access public
-		 * @param void
-		 * @return void
-		**/
+
 		function __construct()
 		{
 			$this->ci =& get_Instance();
@@ -31,17 +16,6 @@
 			//$this->ci->email->initialize($this->mail);
 		}
 
-		/**
-		 * register
-		 *
-		 * @access public
-		 * @param string $username Username
-		 * @param string $password Password
-		 * @param string $email Valid email address
-		 * @param string $question Secret question
-		 * @param string $answer Answer to secret question
-		 * @return mixed
-		**/
 		public function register ($username, $password, $email, $question, $answer)
 		{
 			# Hash secret answer
@@ -121,13 +95,6 @@
 			return 'false';
 		}
 		
-		/**
-		 * unregister
-		 *
-		 * @access public
-		 * @param string $id User ID
-		 * @return boolean
-		**/
 		public function unregister ($id)
 		{
 			$result = $this->_unregister($this->users_table, $this->banned_table, $this->questions_table, $id);
@@ -141,14 +108,6 @@
 			return 'false';
 		}
 		
-		/**
-		 * login
-		 *
-		 * @access public
-		 * @param string $username Vaild Username
-		 * @param string $password Password
-		 * @return mixed
-		**/
 		public function login ($username, $password)
 		{			
 			# Grab hash, password, id, activation_code and banned_id from database.
@@ -190,25 +149,11 @@
 			throw new InvalidLoginDataException();
 		}
 		
-		/**
-		 * logged_in
-		 *
-		 * @access public
-		 * @param void
-		 * @return bool
-		**/
 		public function logged_in ()
 		{
 			return $var = ($this->ci->session->userdata('id')) ? true : false; 
 		}
 
-		/**
-		 * logout
-		 *
-		 * @access public
-		 * @param void
-		 * @return void
-		**/
 		public function logout ()
 		{
 			$this->ci->session->unset_userdata('id');
@@ -220,13 +165,6 @@
 			$this->ci->session->sess_destroy();
 		}
 
-		/**
-		 * activate
-		 *
-		 * @access public
-		 * @param string $userid Valid userid
-		 * @return bool
-		**/
 		public function activate ($userid)
 		{
 			$activate = $this->_activate($this->users_table, $userid);
@@ -234,13 +172,6 @@
 			return $var = ($activate) ? true : false;
 		}
 		
-		/**
-		 * deactivate
-		 *
-		 * @access public
-		 * @param string $userid Valid Userid
-		 * @return bool
-		**/
 		public function deactivate ($userid)
 		{
 			$deactivate = $this->_deactivate($this->users_table, $userid);
@@ -248,14 +179,6 @@
 			return $var = ($deactivate) ? true : false;
 		}
 		
-		/**
-		 * ban
-		 *
-		 * @access public
-		 * @param string $userid Valid User ID
-		 * @param string $reason Ban Reason
-		 * @return bool
-		**/
 		public function ban ($userid, $reason)
 		{
 			$ban = $this->_ban($this->users_table, $this->banned_table, $userid, $reason);
@@ -263,13 +186,6 @@
 			return $var = ($ban) ? true : false;
 		}
 		
-		/**
-		 * unban
-		 *
-		 * @access public
-		 * @param string $userid Valid User ID
-		 * @return bool
-		**/
 		public function unban ($userid)
 		{
 			$unban = $this->_unban($this->users_table, $this->banned_table, $userid);
@@ -277,14 +193,6 @@
 			return $var = ($unban) ? true : false;
 		}
 		
-		/**
-		 * change_password
-		 *
-		 * @access public
-		 * @param string $old_password Valid old password
-		 * @param string $new_passwotr Valid new password
-		 * @return bool
-		**/
 		public function change_password($username, $old_password, $new_password)
 		{
 			$res = $this->_get_password($this->users_table, $username);
@@ -300,14 +208,6 @@
 			return false;
 	 	}
 		
-		/**
-		 * change_password
-		 *
-		 * @access public
-		 * @param string $old_password Valid old password
-		 * @param string $new_passwotr Valid new password
-		 * @return bool
-		**/
 		public function reset_password($username, $new_password)
 		{
 			$res = $this->_get_password($this->users_table, $username);
@@ -319,13 +219,7 @@
 			return false;
 	 	}
 		
-	 	/**
-	 	 * forgotten_begin
-	 	 *
-	 	 * @access public
-	 	 * @param string $email Valid email address
-	 	 * @return bool
-	 	**/
+	 	
 		public function forgotten_begin ($email)
 		{
 			if($this->_check_forgotten_code($this->users_table, $email))
@@ -353,13 +247,7 @@
 			}
 		}
 		
-		/**
-		 * forgotten_process
-		 *
-		 * @access public
-		 * @param string $key
-		 * @return void
-		**/
+		
 		public function forgotten_process($key)
 		{
 			# Select question_id and question
@@ -385,13 +273,7 @@
 			
 		}	
 		
-		/**
-		 * forgotten_end
-		 *
-		 * @access public
-		 * @param string $answer Secret question answer
-		 * @return bool
-		**/
+		
 		public function forgotten_end ($answer)
 		{
 			# Retrieve question_id
@@ -426,86 +308,31 @@
 			return false;
 		}
 		
-		/**
-		 * get_group
-		 *
-		 * @access public
-		 * @param string $id Users id
-		 * @return string
-		**/
+		
 		public function get_group($id){return $this->_get_group($this->groups_table, $this->users_table, $id);}
 		
-		/**
-		 * check_username
-		 *
-		 * @access public
-		 * @param string $username Username
-		 * @return bool
-		**/
+		
 		public function check_username($username){return $this->_check_username($this->users_table, $username);}
 		
-		/**
-		 * check_email
-		 *
-		 * @access public
-		 * @param string $email Valid email address
-		 * @return bool
-		**/
+		
 		public function check_email($email){return $this->_check_email($this->users_table, $email);}
 	
 	}
 	
-	/**
-	 * redux_auth_db
-	 *
-	 * @author Mathew Davies <leveldesign.info@gmail.com>
-	 * @copyright Copyright (c) 1 June 2008, Mathew Davies
-	 * @license http://www.opensource.org/licenses/mit-license.php The MIT License
-	 * @version 1.4
-	 * @since 1.0
-	**/
 	class auth_db {
-		
-		/**
-		 * _activate
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $userid Valid User ID
-		 * @return bool
-		**/
-		protected function _activate ($users_tbl, $userid)
-		{
+
+		protected function _activate ($users_tbl, $userid) {
 			$this->ci->db->where($users_tbl.'.id', $userid)->update($users_tbl, array($users_tbl.'.activation_code' => 1));
-		
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _deactivate
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $userid Valid User ID
-		 * @return bool
-		**/
 		protected function _deactivate ($users_tbl, $userid)
 		{
 			$this->ci->db->where($users_tbl.'.id', $userid)->update($users_tbl, array($users_tbl.'.activation_code' => 0));
-		
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _ban
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $ban_tbl Banned table
-		 * @param string $userid Valid User ID
-		 * @param string $reason Banned reason
-		 * @return bool
-		**/
+		
 		protected function _ban ($users_tbl, $ban_tbl, $userid, $reason)
 		{
 			$this->ci->db->insert($ban_tbl, array('reason' => $reason)); 
@@ -514,15 +341,7 @@
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _unban
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $banned_tbl Banned table
-		 * @param string $userid Valid User ID
-		 * @return bool
-		**/
+		
 		protected function _unban ($users_tbl, $banned_tbl, $userid)
 		{
 			$i = $this->ci->db->select($users_tbl.'.banned_id')	
@@ -543,15 +362,6 @@
 			}
 		}
 
-		/**
-		 * _insert_new_password
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $password New password
-		 * @param integer $question_id Question id
-		 * @return bool
-		**/
 		protected function _insert_new_password($users_tbl, $password, $question_id)
 		{
 			# New hash
@@ -571,30 +381,14 @@
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 
-		/**
-		 * _insert_forgotten_code
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $key Email verification code
-		 * @param string $email Users email address
-		 * @return bool
-		**/
+		
 		protected function _insert_forgotten_code($users_tbl, $key, $email)
 		{
 			$this->ci->db->where($users_tbl.'.email', $email)->update($users_tbl, array('forgotten_password_code' => $key)); 
-			
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 
-		/**
-		 * _check_forgotten_code
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $email Valid email address
-		 * @return bool
-		**/
+		
 		protected function _check_forgotten_code($users_tbl, $email)
 		{
 		 	$i = $this->ci->db->select($users_tbl.'.forgotten_password_code')->from($users_tbl)->where($users_tbl.'.email', $email)->get();
@@ -602,14 +396,7 @@
 		 	return $var = ($i->num_rows() > 0) ? true : false;
 		}
 
-		/**
-		 * _remove_forgotten_code
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $key Email verification code
-		 * @return bool
-		**/
+		
 		protected function _remove_forgotten_code($users_tbl, $key)
 		{
 		 	$this->ci->db->where($users_tbl.'.forgotten_password_code', $key)->update($users_tbl, array($users_tbl.'.forgotten_password_code' => 0));
@@ -617,14 +404,6 @@
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _check_username
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $username Username
-		 * @return bool
-		**/
 		protected function _check_username ($users_tbl, $username)
 		{
 			$i = $this->ci->db->select($users_tbl.'.username')->from($users_tbl)->where($users_tbl.'.username', $username)->get();
@@ -632,14 +411,6 @@
 			return $var = ($i->num_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _check_userid
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $useris User ID
-		 * @return bool
-		**/
 		protected function _check_userid ($users_tbl, $userid)
 		{
 			$i = $this->ci->db->select($users_tbl.'.id')->from($users_tbl)->where($users_tbl.'.id', $userid)->get();
@@ -647,14 +418,6 @@
 			return $var = ($i->num_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _check_email
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $email Valid email address
-		 * @return bool
-		**/
 		protected function _check_email ($users_tbl, $email)
 		{
 			$i = $this->ci->db->select($users_tbl.'.email')->from($users_tbl)->where($users_tbl.'.email', $email)->get();
@@ -662,15 +425,6 @@
 			return $var = ($i->num_rows() > 0) ? true : false;
 		}
 		
-		
-		/**
-		 * _get_password
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param integer $username Valid username
-		 * @return mixed
-		**/
 		protected function _get_password($users_tbl, $username) {
 			$i = $this->ci->db->select($users_tbl.'.password, '.
 									   $users_tbl.'.hash')
@@ -682,29 +436,12 @@
 			return $var = ($i->num_rows() > 0) ? $i->row() : false;
 		}
 		
-		/**
-		 * _set_password
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param integer $username Valid username
-		 * @return mixed
-		**/
 		protected function _set_password($users_tbl, $username, $newpass) {
 			$this->ci->db->where($users_tbl.'.username', $username)->update($users_tbl, array($users_tbl.'.password' => $newpass));
 		
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
-		/**
-		 * _get_group
-		 *
-		 * @access protected
-		 * @param string $groups_tbl Groups table
-		 * @param string $users_tbl Users table
-		 * @param integer $id Group id
-		 * @return string Group name
-		**/
 		protected function _get_group ($groups_tbl, $users_tbl, $id)
 		{
 			$i = $this->ci->db->select($groups_tbl.'.title')
@@ -717,15 +454,6 @@
 			return $var = ($i->num_rows() > 0) ? $i->row()->title : false;
 		}
 		
-		/**
-		 * _get_user_history
-		 *
-		 * @access protected
-		 * @param string $user_table Users table
-		 * @param string $history_table History table
-		 * @param integer $id Users id
-		 * @return null
-		**/
 		protected function _get_user_history ($users_tbl, $history_tbl, $id) {
 			$i = $this->ci->db->select($users_tbl.'.lastlogin, '.
 								  	   $users_tbl.'.ipaddress')
@@ -735,15 +463,6 @@
 			->get();
 		}
 		
-		/**
-		 * _set_user_history
-		 *
-		 * @access protected
-		 * @param string $user_table Users table
-		 * @param string $history_table History table
-		 * @param integer $id Users id
-		 * @return null
-		**/
 		protected function _set_user_history ($users_tbl, $history_tbl, $id) {
 			//$ip = $_SERVER["REMOTE_ADDR"];
 			$ip = $this->ci->input->ip_address();
@@ -778,15 +497,6 @@
 			return $data;
 		}
 		
-		/**
-		 * _get_group_id
-		 *
-		 * @access protected
-		 * @param string $groups_tbl Groups table
-		 * @param string $users_tbl Users table
-		 * @param integer $id Users id
-		 * @return string
-		**/
 		protected function _get_group_id ($groups_tbl, $users_tbl, $id)
 		{
 			$i = $this->ci->db->select($groups_tbl.'.id')
@@ -799,15 +509,6 @@
 			return $var = ($i->num_rows() > 0) ? $i->row()->id : false;
 		}
 		
-		/**
-		 * _get_user_privilege
-		 *
-		 * @access protected
-		 * @param string $groups_tbl Groups table
-		 * @param string $users_tbl Users table
-		 * @param integer $id Users id
-		 * @return privilege array
-		**/
 		protected function _get_user_priv ($groups_tbl, $users_tbl, $id)
 		{
 			$i = $this->ci->db->select($groups_tbl.'.issiteadmin, '.$groups_tbl.'.isadmin, '.$groups_tbl.'.isviewer')
@@ -829,15 +530,6 @@
 			return ($priv != null) ? $priv : false;
 		}
 		
-		/**
-		 * _select_question
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $questions_tbl Questions table
-		 * @param string $forgotten_password_code Forgotten password code
-		 * @return mixed
-		**/
 		protected function _select_question ($users_tbl, $questions_tbl, $forgotten_password_code)
 		{
 			$i = $this->ci->db->select($users_tbl.'.question_id, '.
@@ -851,14 +543,6 @@
 			return $var = ($i->num_rows() > 0) ? $i->row() : false;
 		}
 		
-		/**
-		 * _select_answer
-		 *
-		 * @access protected
-		 * @param string $questions_tbl Questions table
-		 * @param integer $id Questions id
-		 * @return mixed
-		**/
 		protected function _select_answer ($users_tbl, $questions_tbl, $id)
 		{
 			$i = $this->ci->db->select($users_tbl.'.email,'.$questions_tbl.'.answer')
@@ -871,15 +555,6 @@
 			return $var = ($i->num_rows() > 0) ? $i->row() : false;
 		}
 		
-		/**
-		 * _login
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $banned_tbl Banned table
-		 * @param string $username Valid username
-		 * @return mixed
-		**/
 		protected function _login ($users_tbl, $banned_tbl, $username)
 		{
 			$i = $this->ci->db->select($users_tbl.'.password, '.
@@ -897,16 +572,6 @@
 			return $var = ($i->num_rows() > 0) ? $i->row() : false;
 		}
 		
-		/**
-		 * _unregister
-		 *
-		 * @access protected
-		 * @param string $users_tbl Users table
-		 * @param string $banned_tbl Banned table
-		 * @param string $questions_tbl Question table
-		 * @param string $id Valid ID
-		 * @return mixed
-		**/
 		protected function _unregister ($users_tbl, $banned_tbl, $questions_tbl, $id)
 		{
 			

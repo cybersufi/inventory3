@@ -392,7 +392,6 @@
 		protected function _check_forgotten_code($users_tbl, $email)
 		{
 		 	$i = $this->ci->db->select($users_tbl.'.forgotten_password_code')->from($users_tbl)->where($users_tbl.'.email', $email)->get();
-		 	
 		 	return $var = ($i->num_rows() > 0) ? true : false;
 		}
 
@@ -400,28 +399,24 @@
 		protected function _remove_forgotten_code($users_tbl, $key)
 		{
 		 	$this->ci->db->where($users_tbl.'.forgotten_password_code', $key)->update($users_tbl, array($users_tbl.'.forgotten_password_code' => 0));
-		
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
 		protected function _check_username ($users_tbl, $username)
 		{
 			$i = $this->ci->db->select($users_tbl.'.username')->from($users_tbl)->where($users_tbl.'.username', $username)->get();
-			
 			return $var = ($i->num_rows() > 0) ? true : false;
 		}
 		
 		protected function _check_userid ($users_tbl, $userid)
 		{
 			$i = $this->ci->db->select($users_tbl.'.id')->from($users_tbl)->where($users_tbl.'.id', $userid)->get();
-			
 			return $var = ($i->num_rows() > 0) ? true : false;
 		}
 		
 		protected function _check_email ($users_tbl, $email)
 		{
 			$i = $this->ci->db->select($users_tbl.'.email')->from($users_tbl)->where($users_tbl.'.email', $email)->get();
-			
 			return $var = ($i->num_rows() > 0) ? true : false;
 		}
 		
@@ -438,7 +433,6 @@
 		
 		protected function _set_password($users_tbl, $username, $newpass) {
 			$this->ci->db->where($users_tbl.'.username', $username)->update($users_tbl, array($users_tbl.'.password' => $newpass));
-		
 			return $var = ($this->ci->db->affected_rows() > 0) ? true : false;
 		}
 		
@@ -467,7 +461,6 @@
 			//$ip = $_SERVER["REMOTE_ADDR"];
 			$ip = $this->ci->input->ip_address();
 			$date = date('U');
-			
 			$i = $this->ci->db->select($users_tbl.'.lastlogin, '.
 								  $users_tbl.'.ipaddress')
 				->from($users_tbl)
@@ -572,8 +565,7 @@
 			return $var = ($i->num_rows() > 0) ? $i->row() : false;
 		}
 		
-		protected function _unregister ($users_tbl, $banned_tbl, $questions_tbl, $id)
-		{
+		protected function _unregister ($users_tbl, $banned_tbl, $questions_tbl, $id) {
 			
 			$i = $this->ci->db->select($users_tbl.'.banned_id, '.
 									   $users_tbl.'.question_id')	

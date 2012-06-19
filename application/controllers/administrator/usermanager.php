@@ -3,18 +3,21 @@
 class usermanager extends CI_Controller {
 	
 	private $result = "";
+	private $timingStart = "";
 	
 	public function __construct() {
 		parent::__construct();
 		$this->CI =& get_Instance();
 		$this->sitename = $this->CI->config->item('site_name');
 		$this->load->library('admin');
+		$this->load->model('administratir/usermodel', 'um');
 		$this->index = 'administrator/user/index';
 		$this->result = 'administrator/user/result';
 	}
 	
 	public function index() {
 		$this->load->view('administrator/main');
+		return null;
 	}
 	
 	public function userList() {
@@ -60,76 +63,59 @@ class usermanager extends CI_Controller {
 	}
 	
 	public function addUser() {
-		$res = $this->redux_auth->check_username($this->input->post('username'));
+		$username = $this->input->post('username');
+		$res = $this->um->checkUserByName($username);
 		if ($res == false) {
-			$gid = $this->session->userdata('gid');
-			if ($gid == 0) {
-				
-				$config = array(
-					array(
-						'field'   => 'username', 
-						'label'   => 'Username', 
-						'rules'   => 'required'
-					), array(
-						'field'   => 'password', 
-						'label'   => 'Password', 
-						'rules'   => 'required'
-					),  array(
-						'field'   => 'password2', 
-						'label'   => 'Repeat Password', 
-						'rules'   => 'required'
-					), array(
-						'field'   => 'question', 
-						'label'   => 'Secret Question', 
-						'rules'   => 'required'
-					), array(
-						'field'   => 'answer', 
-						'label'   => 'Secret Answer', 
-						'rules'   => 'required'
-					),
-				);
-						
-				$this->form_validation->set_rules($config);
-				
-				if ($this->form_validation->run()) {
-					$redux = $this->redux_auth->register (
-						$this->input->post('username'),
-						$this->input->post('password'),
-						$this->input->post('email'),
-						$this->input->post('question'),
-						$this->input->post('answer')
-					);
-					
-					switch($redux) {
-						case 'REGISTRATION_SUCCESS' :
-						case 'REGISTRATION_SUCCESS_EMAIL' :
-							$data['success'] = 'true';
-							$data['msg'] = 'User registered';
-						break;
-						case 'false' :
-							$data['success'] = 'false';
-							$data['msg'] = 'User Registration failed. Please try again';
-						break;
-						default :
-							$data['success'] = 'false';
-							$data['msg'] = 'Unknown Error. Please try again';
-						break;
-					}
-				} else {
-					$data['success'] = 'false';
-					$data['msg'] = 'Invalid Data. Please try again';
-				}
+
+			$email = $this->input->post('email');
+			$groupid = $this->input->post('groupid');
+			$userstatus = $this->input->post('userstatus');
+
+			$user = new User();
+			$user->setUsername($username);
+			$user->setGroupId($groupid);
+			$user->setEmail($email);
+			$user->setStatus($userstatus);
+			$user->getCredential()->setBlankPassword("default");
+
+			$res = $this->um->addUser($user);
+
+			if ($res) {
+				$data['status'] = 'ok';
+				$data['success'] = true;
+				$data['result'] = array();
 			} else {
-				$data['success'] = 'false';
-				$data['msg'] = 'You have no privilege to add user.';
+				$e = new UserAddFailedException();
+				$data['status'] = 'error';
+				$data['success'] = false;
+				$data['result'] = $e->serialize();
+			}
+			
+			switch($redux) {
+				case 'REGISTRATION_SUCCESS' :
+				case 'REGISTRATION_SUCCESS_EMAIL' :
+					$data['success'] = 'true';
+					$data['msg'] = 'User registered';
+				break;
+				case 'false' :
+					$data['success'] = 'false';
+					$data['msg'] = 'User Registration failed. Please try again';
+				break;
+				default :
+					$data['success'] = 'false';
+					$data['msg'] = 'Unknown Error. Please try again';
+				break;
 			}
 		} else {
-			$data['success'] = 'false';
-			$data['msg'] = 'Username already used.';
+			$e = new UserAlreadyExistsException($username);
+			$data['status'] = 'error';
+			$data['success'] = false;
+			$data['result'] = $e->serialize();
 		}
-		$data['type'] = 'form';
-		$this->load->view($this->result, $data);
-		return null;
+
+
+		/*$data['type'] = 'form';
+		$this->load->view($this->result, $data);*/
 	}
 
 	private function sortParser($sorter) {
@@ -156,9 +142,9 @@ class usermanager extends CI_Controller {
 	}
 	
 	private function filterParser($filters) {
-    		$filters = json_decode($filters);
-    		$where = ' "0" = "0" ';
-    		$qs = '';
+		$filters = json_decode($filters);
+		$where = ' "0" = "0" ';
+		$qs = '';
 		
 		if (is_array($filters)) {
    			for ($i=0;$i<count($filters);$i++){

@@ -14,7 +14,13 @@ class User{
 	private $currentIp = "";
 	private $bannedReason = "";
 	private $lastActive = "";
-	
+
+	private $credential = null;
+
+	function __construct() {
+		$this->credential = new Credential();
+	}
+
 	public function getUserID() {
 		return $this->userid;
 	}
@@ -124,13 +130,17 @@ class User{
 		$this->lastActive = $lastActive;
 	}
 	
+	public function getCredential() {
+		return $this->credential;
+	}
+
 	public function toArray () {
 		$array = get_object_vars($this);
 	    unset($array['_parent'], $array['_index']);
 	    array_walk_recursive($array, function(&$property, $key){
 	        if(is_object($property)
-	        && method_exists($property, 'serialize')){
-	            $property = $property->serialize();
+	        && method_exists($property, 'toArray')){
+	            $property = $property->toArray();
 	        }
 	    });
     	return $array;

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('APPPATH')) exit('No direct script access allowed');
 
 	header("Content-Type: text/html; charset=UTF-8");
 	header("Cache-Control: no-cache, must-revalidate");

@@ -10,7 +10,7 @@ class usermanager extends CI_Controller {
 		$this->CI =& get_Instance();
 		$this->sitename = $this->CI->config->item('site_name');
 		$this->load->library('admin');
-		$this->load->model('administratir/usermodel', 'um');
+		$this->load->model('administrator/usermodel', 'um');
 		$this->index = 'administrator/user/index';
 		$this->result = 'administrator/user/result';
 		$this->timingStart = microtime(true);

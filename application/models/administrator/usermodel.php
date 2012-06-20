@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('APPPATH')) exit('No direct script access allowed');
 
 class Usermodel extends CI_Model {
 	
@@ -69,6 +69,7 @@ class Usermodel extends CI_Model {
     	$res = $this->db->get();
     		
 		if ($res->num_rows() > 0) {
+			$coll = new UserCollection();
 			foreach ($res->result() as $row) {
 				$user = new User();
 				$user->setUserID($row->uid);

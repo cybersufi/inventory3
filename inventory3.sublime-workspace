@@ -7,6 +7,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "application/libraries/acl.php",
+			"settings":
+			{
+				"buffer_size": 5677,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -32,7 +40,7 @@
 	},
 	"file_history":
 	[
-		"/C/website/inventory3/application/controllers/administrator/usermanager.php",
+		"/D/website/inventory3/application/controllers/administrator/usermanager.php",
 		"/D/website/inventory2/application/controllers/administrator/user.php",
 		"/D/website/inventory3/application/controllers/administrator/dashboard.php",
 		"/D/website/inventory3/application/controllers/administrator/auth.php",
@@ -46,9 +54,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"D:\\website\\inventory3\\application\\libraries"
 		]
 	},
 	"find_state":
@@ -56,6 +65,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"getUserRoles",
+			"acl",
 			"redirect",
 			"document"
 		],
@@ -75,8 +86,36 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "application/libraries/acl.php",
+					"settings":
+					{
+						"buffer_size": 5677,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

@@ -3,7 +3,8 @@
 function __autoload($class_name) {
     //$class_name = str_replace('-', '', $class_name);
     $rdir = APPPATH.'/libraries/Admin/';
-    $dirs = array('Include/','Include/Exception/', 'Include/User/', 'Include/User/Exception/');
+    $dirs = array('Include/','Include/Exception/', 'Include/User/', 
+    			  'Include/User/Exception/', 'Include/Permission/');
     
     foreach ($dirs as $dir) {
         if (file_exists($rdir.$dir.$class_name.'.php')) {

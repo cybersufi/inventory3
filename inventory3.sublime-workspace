@@ -3,15 +3,76 @@
 	{
 		"selected_items":
 		[
+			[
+				"user",
+				"user_perm"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "application/libraries/acl.php",
+			"file": "application/controllers/administrator/permissionmanager.php",
 			"settings":
 			{
-				"buffer_size": 5677,
+				"buffer_size": 1682,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/administrator/permissionmodel.php",
+			"settings":
+			{
+				"buffer_size": 1423,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/libraries/Admin/Include/Permission/Permission.php",
+			"settings":
+			{
+				"buffer_size": 975,
+				"line_ending": "Windows",
+				"name": "Permission.php"
+			}
+		},
+		{
+			"file": "application/libraries/Admin/Include/Permission/PermissionCollection.php",
+			"settings":
+			{
+				"buffer_size": 398,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/administrator/usermodel.php",
+			"settings":
+			{
+				"buffer_size": 8981,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/controllers/administrator/usermanager.php",
+			"settings":
+			{
+				"buffer_size": 6545,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/libraries/Admin/Include/User/User.php",
+			"settings":
+			{
+				"buffer_size": 2628,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/libraries/Admin/Include/User/UserCollection.php",
+			"settings":
+			{
+				"buffer_size": 386,
 				"line_ending": "Windows"
 			}
 		}
@@ -40,7 +101,13 @@
 	},
 	"file_history":
 	[
-		"/D/website/inventory3/application/controllers/administrator/usermanager.php",
+		"/Z/inventory3/application/models/administrator/dashboardmodel.php",
+		"/Z/inventory3/application/controllers/administrator/dashboard.php",
+		"/Z/inventory3/application/libraries/Admin/autoloader.php",
+		"/Z/inventory3/application/libraries/acl.php",
+		"/Z/inventory3/application/views/administrator/result.php",
+		"/Z/inventory3/application/views/administrator/user/result.php",
+		"/C/website/inventory3/application/controllers/administrator/usermanager.php",
 		"/D/website/inventory2/application/controllers/administrator/user.php",
 		"/D/website/inventory3/application/controllers/administrator/dashboard.php",
 		"/D/website/inventory3/application/controllers/administrator/auth.php",
@@ -54,10 +121,9 @@
 	},
 	"find_in_files":
 	{
-		"height": 90.0,
+		"height": 0.0,
 		"where_history":
 		[
-			"D:\\website\\inventory3\\application\\libraries"
 		]
 	},
 	"find_state":
@@ -65,8 +131,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"getUserRoles",
-			"acl",
+			"coll",
 			"redirect",
 			"document"
 		],
@@ -86,23 +151,137 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "application/libraries/acl.php",
+					"file": "application/controllers/administrator/permissionmanager.php",
 					"settings":
 					{
-						"buffer_size": 5677,
+						"buffer_size": 1682,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1301,
+								1301
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "application/models/administrator/permissionmodel.php",
+					"settings":
+					{
+						"buffer_size": 1423,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1058,
+								1058
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/libraries/Admin/Include/Permission/Permission.php",
+					"settings":
+					{
+						"buffer_size": 975,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								346,
+								346
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Permission.php",
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/libraries/Admin/Include/Permission/PermissionCollection.php",
+					"settings":
+					{
+						"buffer_size": 398,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								318,
+								318
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "application/models/administrator/usermodel.php",
+					"settings":
+					{
+						"buffer_size": 8981,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1715,
+								1715
 							]
 						],
 						"settings":
@@ -111,7 +290,88 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 11.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "application/controllers/administrator/usermanager.php",
+					"settings":
+					{
+						"buffer_size": 6545,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								570,
+								570
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "application/libraries/Admin/Include/User/User.php",
+					"settings":
+					{
+						"buffer_size": 2628,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2270,
+								2270
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1980.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "application/libraries/Admin/Include/User/UserCollection.php",
+					"settings":
+					{
+						"buffer_size": 386,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								186,
+								190
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -125,7 +385,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{
@@ -136,11 +396,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -175,6 +442,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 206.0,
+	"side_bar_width": 210.0,
 	"status_bar_visible": true
 }

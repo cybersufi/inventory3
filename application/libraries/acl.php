@@ -1,7 +1,7 @@
 <?php if ( ! defined('APPPATH')) exit('No direct script access allowed');
 
-class acl
-{
+class acl {
+	
 	var $perms = array();		//Array : Stores the permissions for the user
 	var $userID;			//Integer : Stores the ID of the current user
 	var $userRoles = array();	//Array : Stores the roles of the current user
@@ -17,8 +17,7 @@ class acl
 
 	function buildACL() {
 		//first, get the rules for the user's role
-		if (count($this->userRoles) > 0)
-		{
+		if (count($this->userRoles) > 0) {
 			$this->perms = array_merge($this->perms,$this->getRolePerms($this->userRoles));
 		}
 		//then, get the individual user permissions
@@ -53,17 +52,20 @@ class acl
 	}
 
 	function getUserRoles() {
-		//$strSQL = "SELECT * FROM `".DB_PREFIX."user_roles` WHERE `userID` = " . floatval($this->userID) . " ORDER BY `addDate` ASC";
-
-		$this->ci->db->where(array('userID'=>floatval($this->userID)));
+		//$strSQL = “SELECT UR.roleid, LOWER(RD.roleName) roleName FROM `”.DB_PREFIX.”user_roles` UR
+		//INNER JOIN role_data RD ON RD.id = UR.roleid WHERE `userid` = ” . floatval($this->userid) . ”
+		//ORDER BY `addDate` ASC”;
+		$this->ci->db->select('UR.roleid, LOWER(RD.roleName) roleName');
+		$this->ci->db->from('user_roles UR');
+		$this->ci->db->join('role_data RD', 'RD.id = UR.roleid');
+		$this->ci->db->where(array('userid'=>floatval($this->userid)));
 		$this->ci->db->order_by('addDate','asc');
-		$sql = $this->ci->db->get('user_roles');
+		$sql = $this->ci->db->get();
 		$data = $sql->result();
 
 		$resp = array();
-		foreach( $data as $row )
-		{
-			$resp[] = $row->roleID;
+		foreach( $data as $row ) {
+			$resp[$row->roleName] = $row->roleid;
 		}
 		return $resp;
 	}
@@ -160,11 +162,10 @@ class acl
 		return $perms;
 	}
 
-	function hasRole($roleID) {
-		foreach($this->userRoles as $k => $v)
-		{
-			if (floatval($v) === floatval($roleID))
-			{
+	function hasRole($roleName) {
+		$roleName = strtolower($roleName);
+		foreach($this->userRoles as $k => $v) {
+			if ($k === $roleName) {
 				return true;
 			}
 		}

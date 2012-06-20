@@ -115,27 +115,21 @@ class usermanager extends CI_Controller {
 		if ($this->form_validation->run()) {
 			$ids = $this->input->post('ids');
 			$ids = explode(";", $ids);
-			foreach ($ids as $id) {
-				$res = $this->um->deleteUserById($id);
-	  		}
-			
-			switch($redux) {
-				case 'UNREGISTER_SUCCESS' :
-					$data['success'] = 'true';
-					$data['msg'] = 'User deleted';
-				break;
-				case 'UNREGISTER_FAILED' :
-					$data['success'] = 'false';
-					$data['msg'] = 'Failed to delete user';
-				break;
-				case 'false' :
-					$data['success'] = 'false';
-					$data['msg'] = 'Unknown Error. Please try again';
-				break;
-				default :
-					$data['success'] = 'false';
-					$data['msg'] = 'Unknown Error. Please try again';
-				break;
+
+	  		try {
+				foreach ($ids as $id) {
+					$res = $this->um->deleteUserById($id);
+		  		}
+				
+				$data['status'] = 'ok';
+				$data['success'] = true;
+				$data['result'] = $res;
+				
+			} catch (SerializableException $e) {
+				$data['status'] = 'error';
+				$data['success'] = false;
+				$data['result'] = $e->serialize();
+				
 			}
 		} else {
 			$e = new InvalidDataException();

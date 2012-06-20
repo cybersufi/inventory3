@@ -7,14 +7,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "application/controllers/administrator/usermanager.php",
-			"settings":
-			{
-				"buffer_size": 6343,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -40,6 +32,7 @@
 	},
 	"file_history":
 	[
+		"/C/website/inventory3/application/controllers/administrator/usermanager.php",
 		"/D/website/inventory2/application/controllers/administrator/user.php",
 		"/D/website/inventory3/application/controllers/administrator/dashboard.php",
 		"/D/website/inventory3/application/controllers/administrator/auth.php",
@@ -82,36 +75,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "application/controllers/administrator/usermanager.php",
-					"settings":
-					{
-						"buffer_size": 6343,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2254,
-								2254
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1218.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

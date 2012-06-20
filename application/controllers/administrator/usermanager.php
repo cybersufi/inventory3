@@ -88,13 +88,13 @@ class usermanager extends CI_Controller {
 
 			} else {
 				$e = new UserAddFailedException();
-				$data['status'] = 'error';
+				$data['status'] = 'ok';
 				$data['success'] = false;
 				$data['result'] = $e->serialize();
 			}
 		} else {
 			$e = new UserAlreadyExistsException($username);
-			$data['status'] = 'error';
+			$data['status'] = 'ok';
 			$data['success'] = false;
 			$data['result'] = $e->serialize();
 		}
@@ -126,18 +126,27 @@ class usermanager extends CI_Controller {
 				$data['result'] = $res;
 				
 			} catch (SerializableException $e) {
-				$data['status'] = 'error';
+				$data['status'] = 'ok';
 				$data['success'] = false;
 				$data['result'] = $e->serialize();
 				
 			}
 		} else {
 			$e = new InvalidDataException();
-			$data['status'] = 'error';
+			$data['status'] = 'ok';
 			$data['success'] = false;
 			$data['result'] = $e->serialize();
 		}
 		$this->load->view($this->result, $data);
+	}
+
+	public function changeUserGroup() {
+		$data['timingStart'] = $this->timingStart;
+		$username = $this->input->post('username');
+		$nguid = $this->input->post('nguid');
+
+		
+		
 	}
 
 	private function sortParser($sorter) {

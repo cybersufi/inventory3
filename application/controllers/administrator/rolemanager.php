@@ -1,6 +1,6 @@
 <?php if ( ! defined('APPPATH')) exit('No direct script access allowed');
 
-class permissionmanager extends CI_Controller {
+class Rolemanager extends CI_Controller {
 
 	private $timingStart="";
 
@@ -8,12 +8,12 @@ class permissionmanager extends CI_Controller {
 		parent::__construct();
 		$this->CI =& get_Instance();
 		//$this->load->library('acl');
-		$this->index = 'administrator/permission/index';
+		$this->index = 'administrator/role/index';
 		$this->result = 'administrator/result';
 		$this->timingStart = microtime(true);
 	}
 
-	public function permissionList(){
+	public function roleList(){
 		//$issiteadmin = $this->session->userdata('issiteadmin');
 		//if ($issiteadmin) {
 			$start = $this->input->get_post('start');
@@ -41,11 +41,11 @@ class permissionmanager extends CI_Controller {
 			$filters = ($isFiltered) ? $filters : NULL;
 			$sort = ($isSorted) ? $sort : NULL;
 			
-			$this->load->model('administrator/permissionmodel','pm');
-			$collection = $this->pm->getPermissionList($start, $limit, $sort, $filters);
+			$this->load->model('administrator/rolemodel','rm');
+			$collection = $this->rm->getRoleList($start, $limit, $sort, $filters);
 			
 	    	$res['data'] = ($collection) ? $collection->toArray() : array();
-			$res['totalCount'] = $this->pm->permissionCount($filters);
+			$res['totalCount'] = $this->rm->roleCount($filters);
 			$data['status'] = 'ok';
 			$data['success'] = true;
 			$data['result'] = $res;
@@ -54,17 +54,6 @@ class permissionmanager extends CI_Controller {
     	$this->load->view($this->result, $data);
 	}
 
-	public function addPermission() {
-		return null;
-	}
-
-	public function editPermission() {
-		return null;
-	}
-
-	public fuction deletePermission() {
-		return null;
-	}
 
 }
 

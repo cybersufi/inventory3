@@ -1,18 +1,18 @@
 <?php if ( ! defined('APPPATH')) exit('No direct script access allowed');
 
-class Permissionmodel extends CI_Model {
+class Rolemodel extends CI_Model {
 
-	private $perm_data = "";
-	private $user_perm = "";
+	private $role_data = "";
+	private $user_roles = "";
 
 	function __construct() {
 		parent::__construct();
-		$this->perm_data = "perm_data";
-		$this->user_perm = "user_perms";
+		$this->role_data = "role_data";
+		$this->user_roles = "user_roles";
 	}
 
-	public function permissionCount($filters=null) {
-		$pt = $this->perm_data;
+	public function roleCount($filters=null) {
+		$pt = $this->role_data;
     
     	$this->db->select($pt.'.id')
 		->from($pt);
@@ -24,12 +24,11 @@ class Permissionmodel extends CI_Model {
 		return $this->db->count_all_results();
   	}
 
-  	public function getPermissionList($start=0, $limit=0, $sorter=NULL, $filters=NULL) {
-    	$pt = $this->perm_data;
+  	public function getRoleList($start=0, $limit=0, $sorter=NULL, $filters=NULL) {
+    	$pt = $this->role_data;
     
     	$this->db->select($pt.'.id, '.
-					  $pt.'.permkey, '.
-					  $pt.'.permname')
+					  $pt.'.rolename')
     	->from($pt);
     
 	    if ($filters != NULL) {
@@ -47,22 +46,17 @@ class Permissionmodel extends CI_Model {
     	$res = $this->db->get();
     		
 		if ($res->num_rows() > 0) {
-			$coll = new PermissionCollection();
+			$coll = new RoleCollection();
 			foreach ($res->result() as $row) {
-				$perm = new Permission();
-				$perm->setId($row->id);
-				$perm->setName($row->permname);
-				$perm->SetKey($row->permkey);
-				$coll->add($perm);
+				$role = new Role();
+				$role->setId($row->id);
+				$role->setName($row->rolename);
+				$coll->add($role);
 			}
 			return $coll;
 		} else {
 			return null;
 		}
-  	}
-
-  	public function deletePermission($permId) {
-  		$pt = $this->perm_data;
   	}
 
 }

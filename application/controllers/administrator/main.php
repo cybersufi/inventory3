@@ -4,8 +4,8 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
-		//$this->load->view('administrator/main');
-		$this->load->library('Admin');
+		$this->load->view('administrator/main');
+		/*$this->load->library('Admin');
 		$user = new User();
 		$user->setUsername('baka');
 		$arr = $user->toArray();
@@ -23,7 +23,7 @@ class Main extends CI_Controller {
 		$col->add($user1);
 		$col->add($user2);
 		//print_r($col->toArray());
-		echo json_encode($col->toArray());
+		echo json_encode($col->toArray());*/
 		
 	}
 }

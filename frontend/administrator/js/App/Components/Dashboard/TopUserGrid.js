@@ -11,9 +11,9 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
     invalidateScrollerOnRefresh: true,
 	initComponent: function () {
 		
-		this.searchField = Ext.create("Ext.ux.form.SearchField",{
-			store: this.store
-		});
+		//this.searchField = Ext.create("Ext.ux.form.SearchField",{
+		//	store: this.store
+		//});
 		
 		this.groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
 			//enableGroupingMenu: false,
@@ -23,7 +23,7 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 		// Create the columns
 		this.defineColumns();
 		
-		this.features = [this.groupingFeature];
+		//this.features = [this.groupingFeature];
 		
 		// Bugfix for scroller becoming detached.
 		// @todo Remove with ExtJS 4.1
@@ -50,7 +50,7 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 			items: [
 				this.refreshButton,
 				{ xtype: 'tbfill' },
-				this.searchField
+				//this.searchField
 			]
 		});
 		
@@ -61,7 +61,7 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 			displayInfo: false
 		});
 		
-		this.bottomToolbar.add({
+		/*this.bottomToolbar.add({
 			xtype: 'button',
 			tooltip: "Expand all Groups",
 			icon: this.expandRowButtonIcon,
@@ -70,9 +70,9 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 				click: this.groupingFeature.expandAll	
 			}
 			
-		});
+		});*/
 		
-		this.bottomToolbar.add({
+		/*this.bottomToolbar.add({
 			xtype: 'button',
 			tooltip: "Collapse all Groups",
 			icon: this.collapseRowButtonIcon,
@@ -80,7 +80,7 @@ Ext.define('Administrator.Components.Dashboard.TopUserGrid', {
 				scope: this.groupingFeature,
 				click: this.groupingFeature.collapseAll	
 			}
-		});
+		});*/
 		
 		this.dockedItems = new Array();
 		

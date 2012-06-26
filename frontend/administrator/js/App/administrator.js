@@ -343,7 +343,7 @@ Administrator.getAjaxProxy = function (a) {
 };
 
 
-PartKeepr.getRESTProxy = function (a) {
+Administrator.getRESTProxy = function (a) {
     var b;
     var c = {
         batchActions: false,
